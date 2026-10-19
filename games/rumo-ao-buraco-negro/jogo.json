@@ -1,0 +1,14 @@
+{
+  "slug": "rumo-ao-buraco-negro",
+  "titulo": "Rumo ao Buraco Negro",
+  "resumo": "Pilote uma nave de Kepler até um buraco negro, passando por Newton e Einstein.",
+  "aula": "Buracos negros",
+  "turmas": ["EF1", "EF2"],
+  "temas": ["Leis de Kepler", "Gravitação universal", "Relatividade geral", "Buracos negros"],
+  "fases": 5,
+  "duracaoMinutos": 30,
+  "tecnologias": ["three"],
+  "status": "beta",
+  "versao": "0.1.0",
+  "atualizadoEm": "2026-10-18"
+}

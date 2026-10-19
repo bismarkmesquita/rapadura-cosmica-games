@@ -1,0 +1,170 @@
+/* Portal de jogos: layout provisório até o design final (Claude Design). Cores e fontes vêm de tokens.css. */
+html,
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.5;
+}
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(255, 181, 71, 0.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(115, 210, 255, 0.08), transparent 60%), var(--void);
+  min-height: 100vh;
+}
+.faixa {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.topo {
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.abertura {
+  padding-block: 56px 32px;
+}
+.abertura h1 {
+  font-family: var(--f-display);
+  font-size: clamp(40px, 7vw, 76px);
+  line-height: 0.95;
+  margin: 10px 0 14px;
+  text-wrap: balance;
+}
+.abertura h1 em {
+  font-style: normal;
+  color: var(--sol);
+}
+.abertura p {
+  max-width: 56ch;
+  color: var(--muted);
+  font-size: 19px;
+  margin: 0;
+}
+.secao {
+  font-family: var(--f-display);
+  font-size: 24px;
+  margin: 16px 0;
+}
+.grade-jogos {
+  list-style: none;
+  margin: 0 0 56px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+}
+.jogo__link {
+  display: grid;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+.jogo__link:hover,
+.jogo__link:focus-visible {
+  border-color: var(--sol);
+  transform: translateY(-2px);
+}
+.jogo__link:focus-visible {
+  outline: 2px solid var(--sol);
+  outline-offset: 2px;
+}
+.jogo__capa {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  background: #060818;
+}
+.jogo__corpo {
+  padding: 16px 18px 18px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+.jogo__etiquetas {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.etiqueta {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 9px;
+  color: var(--orbita);
+}
+.etiqueta--beta {
+  color: var(--sol);
+}
+.jogo__titulo {
+  font-family: var(--f-display);
+  font-size: 22px;
+  margin: 4px 0 0;
+}
+.jogo__resumo {
+  margin: 0;
+  color: var(--ink);
+}
+.jogo__meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.jogo__jogar {
+  justify-self: start;
+  margin-top: 8px;
+}
+.vazio {
+  color: var(--muted);
+}
+.canal {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(14, 18, 40, 0.55);
+}
+.canal__conteudo {
+  padding-block: 40px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.canal h2 {
+  font-family: var(--f-display);
+  font-size: 30px;
+  margin: 6px 0 8px;
+}
+.canal p {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--muted);
+}
+.rodape {
+  padding-block: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.links-canal .btn {
+  text-decoration: none;
+  display: inline-block;
+}
+@media (prefers-reduced-motion: reduce) {
+  .jogo__link {
+    transition: none;
+  }
+}

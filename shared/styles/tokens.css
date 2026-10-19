@@ -1,0 +1,22 @@
+/*
+ * Tokens visuais compartilhados por todos os jogos e pelo portal.
+ * Os jogos são de "noite estrelada": um único tema escuro, por escolha.
+ * Quando o design do canal (Claude Design) estiver pronto, ajuste aqui.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&display=swap');
+
+:root {
+  --void: #03040b;
+  --panel: rgba(14, 18, 40, 0.82);
+  --panel-solid: #0e1228;
+  --line: rgba(150, 170, 255, 0.18);
+  --ink: #e9ecff;
+  --muted: #9aa3cf;
+  --sol: #ffb547;
+  --orbita: #73d2ff;
+  --alerta: #ff7f6e;
+  --ok: #7fe0a6;
+  --f-display: 'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}

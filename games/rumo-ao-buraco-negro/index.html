@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Rumo ao Buraco Negro · Rapadura Cósmica</title>
+    <meta
+      name="description"
+      content="Pilote uma nave de Kepler até um buraco negro, passando por Newton e Einstein. Jogo do canal Rapadura Cósmica."
+    />
+  </head>
+  <body>
+    <canvas id="c" aria-label="Espaço do jogo em 3D"></canvas>
+    <canvas id="ov" aria-hidden="true"></canvas>
+
+    <!-- HUD -->
+    <div class="hud missoes" id="missoes" hidden>
+      <div class="box">
+        <div class="eyebrow" id="faseNome">Fase</div>
+        <ul id="listaMissoes"></ul>
+      </div>
+    </div>
+    <div class="hud" id="painel" hidden><div class="box" id="painelBox"></div></div>
+    <div class="hud" id="info" hidden><div class="box" id="infoBox"></div></div>
+    <div class="hud teclas" id="teclas" hidden></div>
+    <div id="topoBtns" hidden>
+      <button class="btn" id="btnPausa">Pausa (Esc)</button>
+      <button class="btn" id="btnTela">Tela cheia</button>
+    </div>
+    <div id="seloJogo"></div>
+    <div class="toast" id="toast" hidden></div>
+
+    <!-- Painel de ação (botões contextuais e desafios EF2) -->
+    <div class="hud painel-acao" id="acao" hidden>
+      <div class="box">
+        <div class="eyebrow" id="acaoEyebrow"></div>
+        <h3 id="acaoTitulo"></h3>
+        <div id="acaoCorpo"></div>
+      </div>
+    </div>
+
+    <!-- Painel do canhão de Newton (fase 2) -->
+    <div class="hud" id="canhao" hidden>
+      <div class="box">
+        <div class="eyebrow">Canhão de Newton</div>
+        <h3>Escolha a velocidade do disparo</h3>
+        <div class="vel"><span id="velTxt">5,0</span> km/s</div>
+        <input
+          type="range"
+          id="velCanhao"
+          min="0"
+          max="12"
+          step="0.1"
+          value="5"
+          aria-label="Velocidade do disparo em km/s"
+        />
+        <div class="row">
+          <button class="btn prim" id="disparar">Disparar (F)</button>
+          <button class="btn" id="limpar">Limpar</button>
+          <button class="btn" id="decolar">Decolar com a nave</button>
+        </div>
+        <div class="resultados" id="resultados"></div>
+        <details>
+          <summary>Desafio EF2: calcule as velocidades</summary>
+          <div class="calc">
+            <div id="desafioDados"></div>
+            <label
+              >Órbita rasante, <span id="formulaOrbita"></span>:
+              <input id="calcOrb" inputmode="decimal" placeholder="km/s" /> km/s</label
+            >
+            <label
+              >Escape, <span id="formulaEscape"></span>:
+              <input id="calcEsc" inputmode="decimal" placeholder="km/s" /> km/s</label
+            >
+            <button class="btn" id="conferir">Conferir</button>
+            <div class="res" id="calcRes"></div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="camada" id="cardCamada" hidden>
+      <div class="card" role="dialog" aria-modal="true" id="card"></div>
+    </div>
+
+    <!-- Pausa -->
+    <div class="camada" id="pausa" hidden>
+      <div class="card">
+        <div class="eyebrow">Jogo pausado</div>
+        <h2>O que você quer fazer?</h2>
+        <div class="acoes" style="justify-content: flex-start">
+          <button class="btn prim" id="pContinuar">Continuar</button>
+          <button class="btn" id="pCard">Rever último card (C)</button>
+          <button class="btn" id="pReiniciar">Reiniciar a fase</button>
+          <button class="btn" id="pMenu">Voltar ao menu</button>
+        </div>
+        <p style="margin-top: 22px; color: var(--muted)">Gostou? Tem mais astronomia no canal:</p>
+        <div id="linksPausa"></div>
+      </div>
+    </div>
+
+    <!-- Menu -->
+    <div class="camada" id="menu">
+      <div class="card">
+        <div class="topo">
+          <div class="eyebrow">Uma viagem pela gravidade</div>
+          <div id="seloMenu"></div>
+        </div>
+        <h1>Rumo ao <em>Buraco Negro</em></h1>
+        <p>
+          Pilote uma nave de Kepler até um buraco negro, passando por Newton e Einstein. Comece pela fase 1 ou
+          escolha uma fase para a aula de hoje.
+        </p>
+        <div class="fases" id="fases">
+          <button class="fase sel" data-fase="1">
+            <span class="eyebrow">Fase 1</span><b>Kepler</b><small>Como os planetas se movem</small>
+          </button>
+          <button class="fase" data-fase="2">
+            <span class="eyebrow">Fase 2</span><b>Newton</b><small>Por que eles se movem assim</small>
+          </button>
+          <button class="fase" data-fase="3">
+            <span class="eyebrow">Fase 3</span><b>Einstein</b><small>O espaço-tempo curvo</small>
+          </button>
+          <button class="fase" data-fase="4">
+            <span class="eyebrow">Fase 4</span><b>Estrelas escuras</b><small>Quando nem a luz escapa</small>
+          </button>
+          <button class="fase" data-fase="5">
+            <span class="eyebrow">Fase 5</span><b>Buraco negro</b><small>Viagem a Sagitário A*</small>
+          </button>
+        </div>
+        <div class="controles">
+          <div><kbd>Mouse</kbd> para os lados vira a nave</div>
+          <div><kbd>W</kbd> ou <kbd>clique</kbd> acelera</div>
+          <div><kbd>S</kbd> freia · <kbd>Shift</kbd> turbo</div>
+          <div><kbd>A</kbd> <kbd>D</kbd> também viram</div>
+          <div><kbd>V</kbd> primeira ou terceira pessoa</div>
+          <div><kbd>M</kbd> mapa visto de cima</div>
+          <div><kbd>Botão direito</kbd> + arrastar olha em volta</div>
+          <div><kbd>Roda</kbd> aproxima e afasta a câmera</div>
+          <div><kbd>Esc</kbd> pausa · <kbd>H</kbd> esconde o painel</div>
+        </div>
+        <div class="acoes">
+          <a class="btn" href="/">Outros jogos</a>
+          <button class="btn" id="btnTela2">Tela cheia</button>
+          <button class="btn prim" id="comecar">Começar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="camada" id="erro3d" hidden>
+      <div class="card">
+        <div class="eyebrow">Sem 3D neste navegador</div>
+        <h2>Não foi possível iniciar os gráficos 3D</h2>
+        <p>Este computador ou navegador não liberou o WebGL. Tente abrir no Chrome ou no Edge atualizados.</p>
+      </div>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

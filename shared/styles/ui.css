@@ -1,0 +1,420 @@
+/* Componentes de interface compartilhados: HUD, cards, botões, toast, painel de ação, selo do canal. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--f-body);
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--sol);
+  outline-offset: 2px;
+}
+[hidden] {
+  display: none !important;
+}
+kbd {
+  font-family: var(--f-display);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+}
+.eyebrow {
+  font-family: var(--f-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  color: var(--sol);
+}
+
+/* Botões */
+.btn {
+  display: inline-block;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--f-display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.btn:hover {
+  border-color: var(--sol);
+}
+.btn.prim {
+  background: var(--sol);
+  color: #1b1205;
+  border-color: var(--sol);
+}
+.btn.prim:hover {
+  filter: brightness(1.08);
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* HUD */
+.hud {
+  position: fixed;
+  z-index: 5;
+  pointer-events: none;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.hud .box {
+  pointer-events: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  backdrop-filter: blur(6px);
+}
+.hud .linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.hud .linha span:first-child {
+  color: var(--muted);
+}
+.hud .linha b {
+  font-family: var(--f-display);
+  font-weight: 600;
+}
+.hud .medidor {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 4px 0 8px;
+  overflow: hidden;
+}
+.hud .medidor i {
+  display: block;
+  height: 100%;
+  background: var(--orbita);
+  border-radius: 4px;
+}
+.missoes ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.missoes li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--muted);
+}
+.missoes li .chk {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border: 1.5px solid var(--muted);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+}
+.missoes li.atual {
+  color: var(--ink);
+}
+.missoes li.atual .chk {
+  border-color: var(--sol);
+}
+.missoes li.feita {
+  color: var(--ok);
+}
+.missoes li.feita .chk {
+  border-color: var(--ok);
+  background: rgba(127, 224, 166, 0.15);
+}
+.teclas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  z-index: 8;
+  top: calc(18px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-solid);
+  border: 1px solid var(--sol);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: var(--f-display);
+  font-weight: 600;
+  transition: opacity 0.3s;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+}
+
+/* Camadas e cards */
+.camada {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding-block: 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: rgba(3, 4, 12, 0.55);
+  overflow-y: auto;
+}
+.card {
+  width: min(720px, 100%);
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  font-size: 19px;
+  line-height: 1.5;
+}
+.card h2 {
+  font-family: var(--f-display);
+  font-size: clamp(26px, 4vw, 38px);
+  line-height: 1.1;
+  margin: 6px 0 14px;
+  text-wrap: balance;
+}
+.card p {
+  margin: 0 0 12px;
+  max-width: 62ch;
+}
+.card .ef2 {
+  margin-top: 14px;
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+}
+.card .ef2 summary {
+  cursor: pointer;
+  font-family: var(--f-display);
+  font-weight: 600;
+  color: var(--orbita);
+  letter-spacing: 0.04em;
+}
+.card .ef2 div {
+  margin-top: 10px;
+  font-size: 17px;
+}
+.card table {
+  border-collapse: collapse;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+}
+.card th,
+.card td {
+  padding: 5px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+}
+.card th:first-child,
+.card td:first-child {
+  text-align: left;
+}
+.card th {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 14px;
+}
+.card .tabela {
+  overflow-x: auto;
+  margin: 6px 0 12px;
+}
+.card .acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.card .dica {
+  color: var(--muted);
+  font-size: 16px;
+  margin-right: auto;
+}
+.card.com-ilus {
+  width: min(1000px, 100%);
+}
+.card .grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.card.com-ilus .grade {
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+}
+.card .texto {
+  min-width: 0;
+}
+.card figure {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.card figure canvas {
+  width: 100%;
+  display: block;
+  background: #070a1c;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.card figcaption {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+math {
+  font-family: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', math;
+  color: var(--sol);
+  font-size: 1.15em;
+}
+math[display='block'] {
+  font-size: 1.5em;
+  margin: 12px 0;
+}
+
+/* Painel de ação (desafios e botões contextuais) */
+.painel-acao {
+  bottom: calc(52px + env(safe-area-inset-bottom, 0px));
+  right: max(14px, env(safe-area-inset-right, 0px));
+  width: min(340px, calc(100vw - 28px));
+}
+.painel-acao h3 {
+  font-family: var(--f-display);
+  margin: 2px 0 8px;
+  font-size: 20px;
+}
+.painel-acao p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.painel-acao .row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.painel-acao label {
+  font-size: 14px;
+}
+.painel-acao input {
+  width: 110px;
+  background: #060818;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font: inherit;
+}
+.painel-acao .res {
+  min-height: 1.3em;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* Selo e links do canal */
+.selo-canal {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.selo-canal__planeta {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffe2a8, var(--sol) 55%, #c26a12);
+  flex: none;
+}
+.selo-canal__planeta::after {
+  content: '';
+  position: absolute;
+  inset: 9px -7px;
+  border: 2px solid var(--orbita);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+}
+.selo-canal__texto {
+  display: grid;
+  line-height: 1.1;
+}
+.selo-canal__texto b {
+  font-family: var(--f-display);
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+.selo-canal__texto small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.selo-canal--compacto .selo-canal__planeta {
+  width: 18px;
+  height: 18px;
+}
+.selo-canal--compacto .selo-canal__planeta::after {
+  inset: 6px -5px;
+}
+.selo-canal--compacto .selo-canal__texto b {
+  font-size: 13px;
+}
+.links-canal {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 780px) {
+  .card.com-ilus .grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card figure {
+    order: -1;
+    max-width: 360px;
+  }
+}
+@media (max-width: 640px) {
+  .card {
+    padding: 20px;
+    font-size: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
+}
