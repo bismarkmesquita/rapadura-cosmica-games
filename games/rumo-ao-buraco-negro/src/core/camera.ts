@@ -32,6 +32,8 @@ export const rig = {
 
 const posAlvo = new THREE.Vector3();
 const olhar = new THREE.Vector3();
+/** Posição da câmera em relação à nave, na terceira pessoa (suavizada). */
+const deslocamento = new THREE.Vector3();
 
 /** Altura do plano de voo da fase atual. */
 export const Y0 = (): number => estado.fase?.alturaVoo ?? 0;
@@ -132,15 +134,14 @@ export function atualizaCamera(dt: number, alvo: THREE.Vector3): void {
     const cx = Math.cos(a);
     const cz = Math.sin(a);
     const D = rig.dist3 * s;
-    posAlvo.set(
-      nave.x - cx * D * Math.cos(rig.el3),
-      D * Math.sin(rig.el3) + Y0(),
-      nave.y - cz * D * Math.cos(rig.el3),
-    );
+    // Suaviza só o deslocamento em relação à nave, não a posição: perseguir a posição deixava a câmera
+    // para trás proporcionalmente à velocidade, e esse atraso mudava a cada quadro mais longo (tela tremendo).
+    posAlvo.set(-cx * D * Math.cos(rig.el3), D * Math.sin(rig.el3), -cz * D * Math.cos(rig.el3));
     if (rig.pular) {
-      camera.position.copy(posAlvo);
+      deslocamento.copy(posAlvo);
       rig.pular = false;
-    } else camera.position.lerp(posAlvo, Math.min(1, dt * 12));
+    } else deslocamento.lerp(posAlvo, 1 - Math.exp(-dt * 12));
+    camera.position.set(nave.x + deslocamento.x, Y0() + deslocamento.y, nave.y + deslocamento.z);
     olhar.set(nave.x + cx * D * 0.5, D * 0.04 + Y0(), nave.y + cz * D * 0.5);
   } else {
     const a = nave.ang + rig.offAz;

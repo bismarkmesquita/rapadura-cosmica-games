@@ -1,22 +1,49 @@
 /*
- * Tokens visuais compartilhados por todos os jogos e pelo portal.
+ * Tokens visuais compartilhados por todos os jogos.
  * Os jogos são de "noite estrelada": um único tema escuro, por escolha.
- * Quando o design do canal (Claude Design) estiver pronto, ajuste aqui.
+ *
+ * Cores e fontes COPIADAS do site (rapadura-cosmica-frontend), tema escuro:
+ *   src/base/styles/colors.scss  → --void (--color-black), --panel-solid (--color-card), --line (--color-border),
+ *                                  --ink, --muted (--color-text-secondary), --sol (--color-cometa),
+ *                                  --primaria (--color-primary)
+ *   src/app/layout.tsx           → Plus Jakarta Sans (interface) e Xilosa (nome do canal e títulos de abertura)
+ * A cópia é intencional (poucos valores, mudam raramente). Se o site mudar, atualize aqui.
+ * --orbita, --ok e --alerta são só dos jogos: o site não tem equivalente.
+ *
+ * As fontes vêm de arquivos do projeto, sem Google Fonts, para o jogo funcionar offline (npm run build:arquivos).
+ * Da Plus Jakarta Sans (pacote @fontsource-variable), só o subconjunto latino, que cobre o português.
  */
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&display=swap');
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2')
+    format('woff2-variations');
+  font-weight: 200 800;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Xilosa';
+  src: url('./fonts/xilosa.ttf') format('truetype');
+  font-display: swap;
+}
 
 :root {
-  --void: #03040b;
-  --panel: rgba(14, 18, 40, 0.82);
-  --panel-solid: #0e1228;
-  --line: rgba(150, 170, 255, 0.18);
-  --ink: #e9ecff;
-  --muted: #9aa3cf;
-  --sol: #ffb547;
+  --void: #0e0b16;
+  --panel: rgba(31, 27, 46, 0.82);
+  --panel-solid: #1f1b2e;
+  --line: #2c2838;
+  --ink: #edebf5;
+  --muted: #b7b4c4;
+  --sol: #f2a93b;
+  --primaria: #8b7cf6;
   --orbita: #73d2ff;
   --alerta: #ff7f6e;
   --ok: #7fe0a6;
-  --f-display: 'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
-  --f-body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+  --f-display: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --f-marca: 'Xilosa', Georgia, serif;
   color-scheme: dark;
 }

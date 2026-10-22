@@ -77,7 +77,7 @@ export function rotulo(
   tam = 12,
 ): void {
   c.fillStyle = cor;
-  c.font = `600 ${tam}px "Chakra Petch",sans-serif`;
+  c.font = `600 ${tam}px "Plus Jakarta Sans",sans-serif`;
   c.textAlign = al;
   c.fillText(txt, x, y);
 }

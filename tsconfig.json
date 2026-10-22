@@ -17,5 +17,5 @@
       "@shared/*": ["./shared/*"]
     }
   },
-  "include": ["portal", "shared", "games", "vite.config.ts"]
+  "include": ["shared", "games", "vite.config.ts"]
 }

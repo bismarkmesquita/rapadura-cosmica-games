@@ -1,9 +1,8 @@
 import { CANAL } from './canal';
+// Logo oficial, copiado do site (rapadura-cosmica-frontend: public/static/images/channel.png).
+import logo from './logo.png';
 
-/**
- * Selo do canal para colocar em menus, pausas e telas finais dos jogos.
- * Enquanto não houver o logo oficial em shared/brand/, usa uma marca em texto.
- */
+/** Selo do canal (logo + nome) para colocar em menus, pausas e telas finais dos jogos. */
 export function seloCanal(opcoes: { compacto?: boolean } = {}): HTMLElement {
   const a = document.createElement('a');
   a.className = 'selo-canal' + (opcoes.compacto ? ' selo-canal--compacto' : '');
@@ -12,7 +11,7 @@ export function seloCanal(opcoes: { compacto?: boolean } = {}): HTMLElement {
   a.rel = 'noopener';
   a.setAttribute('aria-label', `${CANAL.nome}: abrir o site do canal`);
   a.innerHTML =
-    `<span class="selo-canal__planeta" aria-hidden="true"></span>` +
+    `<img class="selo-canal__logo" src="${logo}" alt="" />` +
     `<span class="selo-canal__texto"><b>${CANAL.nome}</b>` +
     (opcoes.compacto ? '' : `<small>${CANAL.slogan}</small>`) +
     `</span>`;

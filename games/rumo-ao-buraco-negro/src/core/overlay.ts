@@ -11,7 +11,7 @@ export function rotulo3D(txt: string, x: number, y: number, cor: string, dy = 0,
   const [sx, sy, atras] = projeta(x, y, h);
   if (atras || sx < -50 || sx > tela.W + 50 || sy < -50 || sy > tela.H + 50) return;
   oc.fillStyle = cor;
-  oc.font = `600 ${tam}px "Chakra Petch",sans-serif`;
+  oc.font = `600 ${tam}px "Plus Jakarta Sans",sans-serif`;
   oc.textAlign = 'center';
   oc.fillText(txt, sx, sy + dy);
 }
@@ -20,12 +20,10 @@ export function rotulo3D(txt: string, x: number, y: number, cor: string, dy = 0,
 export function desenhaAlvo(alvo: Alvo | null): void {
   if (!alvo) return;
   const { W, H } = tela;
-  let [sx, sy, atras] = projeta(alvo.x, alvo.y);
+  const [x, y, atras] = projeta(alvo.x, alvo.y);
+  const sx = atras ? W - x : x;
+  const sy = atras ? H - y : y;
   const m = 50;
-  if (atras) {
-    sx = W - sx;
-    sy = H - sy;
-  }
   const t = performance.now() / 1000;
   if (!atras && sx > m && sx < W - m && sy > m && sy < H - m) {
     oc.strokeStyle = COR.sol;
@@ -59,7 +57,7 @@ export function desenhaAlvo(alvo: Alvo | null): void {
   oc.fill();
   oc.restore();
   oc.fillStyle = COR.ink;
-  oc.font = '600 13px "Chakra Petch",sans-serif';
+  oc.font = '600 13px "Plus Jakarta Sans",sans-serif';
   oc.textAlign = 'center';
   oc.fillText(alvo.nome, px - Math.cos(ang) * 34, py - Math.sin(ang) * 28 + 4);
 }

@@ -22,5 +22,5 @@ export const M = {
   /** Texto comum dentro da fórmula. */
   t: (x: string): string => `<mtext>${x}</mtext>`,
   /** Espaço largo. */
-  esp: (): string => `<mtext> </mtext>`,
+  esp: (): string => `<mtext>\u2003</mtext>`,
 };
