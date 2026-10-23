@@ -9,7 +9,7 @@ import { scene } from '../core/engine';
 import { nave, posicionaNave } from '../core/estado';
 import { iniciaCamera } from '../core/camera';
 import { controlaNave, moveNave, registraTrilha } from '../core/ship';
-import { cards, info, missoes, painel, teclasDaFase, toast } from '../core/ui';
+import { cards, info, missoes, painel, teclasDaFase, toast, toqueDaFase } from '../core/ui';
 import { desenhaAlvo, rotulo3D } from '../core/overlay';
 import { fluxo } from '../core/flow';
 import { brilho } from '../scene/sprites';
@@ -173,6 +173,7 @@ export class FaseEinstein implements Fase {
       { id: 'tempo', texto: T.MISSOES.tempo, alvo: () => ({ x: 0, y: 0, nome: 'Sol' }) },
     ]);
     teclasDaFase(T.TECLAS);
+    toqueDaFase(T.TOQUE);
     cards.enfileira(T.intro);
   }
 

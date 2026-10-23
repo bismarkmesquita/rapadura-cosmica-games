@@ -28,6 +28,16 @@
       <button class="btn" id="btnTela">Tela cheia</button>
     </div>
     <div id="seloJogo"></div>
+
+    <!-- Controles na tela (só em celular e tablet; os botões vêm de content/jogo.ts e do TOQUE de cada fase) -->
+    <div id="toque" hidden>
+      <div class="toque-grupo toque-sistema" id="toqueSistema"></div>
+      <div class="toque-grupo toque-direcao" id="toqueDirecao"></div>
+      <div class="toque-grupo toque-motor">
+        <div class="toque-extras" id="toqueExtras"></div>
+        <div class="toque-pedais" id="toqueMotor"></div>
+      </div>
+    </div>
     <div class="toast" id="toast" hidden></div>
 
     <!-- Painel de ação (botões contextuais e desafios EF2) -->
@@ -140,11 +150,27 @@
           <div><kbd>Roda</kbd> aproxima e afasta a câmera</div>
           <div><kbd>Esc</kbd> pausa · <kbd>H</kbd> esconde o painel</div>
         </div>
+        <div class="controles controles--toque">
+          <div><kbd>◀</kbd> <kbd>▶</kbd> viram a nave</div>
+          <div><kbd>Acelerar</kbd> <kbd>Frear</kbd> <kbd>Turbo</kbd> à direita</div>
+          <div>Arraste o dedo na tela para olhar em volta</div>
+          <div>Dois dedos aproximam e afastam a câmera</div>
+          <div>No mapa, toque onde quer ir</div>
+          <div><kbd>II</kbd> pausa e revê o último card</div>
+        </div>
         <div class="acoes">
           <a class="btn" href="/games">Outros jogos</a>
           <button class="btn" id="btnTela2">Tela cheia</button>
           <button class="btn prim" id="comecar">Começar</button>
         </div>
+      </div>
+    </div>
+
+    <div class="camada" id="gire" aria-live="polite">
+      <div class="card">
+        <div class="eyebrow">Celular em pé</div>
+        <h2>Gire o celular</h2>
+        <p>O jogo funciona com o celular deitado, para caber a nave e os controles.</p>
       </div>
     </div>
 

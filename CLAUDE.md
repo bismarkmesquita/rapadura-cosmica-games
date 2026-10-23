@@ -39,7 +39,7 @@ rapadura-games/
 │   ├── math/                formatação de números e fórmulas em MathML
 │   ├── physics/             gravitação, Kepler, Schwarzschild (com testes)
 │   ├── styles/              tokens.css (cores e fontes, copiados do site), fonts/ e ui.css (componentes)
-│   └── ui/                  cards, missões, painel de ação, toast, HUD
+│   └── ui/                  cards, missões, painel de ação, toast, HUD, controles de toque
 ├── games/
 │   └── <slug-do-jogo>/
 │       ├── jogo.json        ficha do jogo (vai para o catalogo.json)
@@ -113,8 +113,11 @@ Para mudar de fase ou voltar ao menu, use `fluxo` de `core/flow.ts`; nunca impor
 
 ### Conteúdo separado do código
 
-Textos de cards, missões, avisos e listas de teclas ficam **só** em `content/`. A lógica nunca tem frases para o
-aluno. Assim, corrigir uma data ou reescrever uma explicação não mexe na física.
+Textos de cards, missões, avisos, listas de teclas e rótulos dos botões de toque ficam **só** em `content/`. A lógica
+nunca tem frases para o aluno. Assim, corrigir uma data ou reescrever uma explicação não mexe na física.
+
+Texto que fala de tecla ou mouse ("Aperte F", "Mova o mouse") precisa da versão para celular: use
+`porDispositivo('Aperte F para lançar uma sonda', 'Toque em Sonda para lançar uma sonda')` de `shared/ui/toque.ts`.
 
 ## Regras de código
 
@@ -180,6 +183,30 @@ aluno. Assim, corrigir uma data ou reescrever uma explicação não mexe na fís
 
 Fases em que ver de cima é essencial (como a de Newton) usam `camFixa` e ignoram V e M.
 
+### Celular e tablet
+
+Todo jogo funciona no celular, **deitado** (em pé aparece "Gire o celular" e o jogo pausa). Os controles aparecem só
+em telas de toque sem mouse (`telaDeToque()`); no computador nada muda.
+
+| Ação                     | No celular                                                         |
+| ------------------------ | ------------------------------------------------------------------ |
+| Virar                    | botões ◀ ▶ à esquerda (segurar)                                    |
+| Acelerar / frear / turbo | botões à direita: Acelerar e Frear (segurar), Turbo (liga/desliga) |
+| Câmera                   | botões Câmera e Mapa no topo; arrastar um dedo olha em volta       |
+| Zoom                     | pinça com dois dedos                                               |
+| Apontar (visão de cima)  | tocar onde a nave deve ir                                          |
+| Interface                | botão II (pausa) e Painel (esconde o painel) no topo               |
+
+- Os botões **apertam teclas virtuais** (`shared/ui/toque.ts::ControlesToque`): o toque entra em `aoTeclar` e no
+  conjunto `teclado` como o teclado, então fases e física não sabem de onde veio o comando. Os botões fixos ficam em
+  `content/jogo.ts` (`TOQUE`); uma fase com teclas próprias exporta `TOQUE` no seu `content/` e chama
+  `toqueDaFase(T.TOQUE)` no `init`, junto de `teclasDaFase` (Kepler: Elipses e Tempo; Einstein: Sonda).
+- Os gestos na cena ficam em `core/input.ts::iniciaGestos` (eventos de ponteiro com `preventDefault`, para o
+  navegador não gerar também eventos de mouse).
+- No celular o HUD é compacto: as missões mostram só a atual, e "Você está perto de…" vai para o alto, ao centro.
+  Painéis grandes (canhão, painel de ação) ficam no centro, com rolagem.
+- Teste com emulação de celular deitado (por exemplo 844×390 e 667×375, com toque) e num aparelho de verdade.
+
 ## Qualidade
 
 Antes de abrir um PR, rode:
@@ -192,7 +219,8 @@ npm run build
 npm run build:arquivos
 ```
 
-Teste no navegador em 1280×720 (tela de aula) e numa largura de celular. O CI repete as verificações.
+Teste no navegador em 1280×720 (tela de aula) e num celular deitado (veja "Celular e tablet"). O CI repete as
+verificações.
 
 Para testar junto com o site: rode `npm run dev` aqui (porta 5173) e, no front-end, `npm run dev` com
 `GAMES_ORIGIN=http://localhost:5173` no `.env.development`. `localhost:3000/games` mostra o catálogo e o botão

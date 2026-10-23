@@ -1,12 +1,13 @@
 /** Textos da fase 3 (Einstein). */
 import type { CardDef } from '@shared/ui/cards';
+import { porDispositivo, type BotaoToque } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
 
 export const NOME_FASE = 'Fase 3 · Einstein';
 
 export const MISSOES = {
   centro: 'Voe até o centro da grade',
-  sondas: 'Lance 3 sondas com a tecla F',
+  sondas: porDispositivo('Lance 3 sondas com a tecla F', 'Lance 3 sondas com o botão Sonda'),
   eclipse: 'Voe até o observatório do eclipse',
   tempo: 'Fique bem perto do Sol por 8 segundos',
 };
@@ -21,6 +22,9 @@ export const TECLAS: [string, string][] = [
   ['C', 'rever card'],
 ];
 
+/** Botões desta fase nos controles de toque. */
+export const TOQUE: BotaoToque[] = [{ tecla: 'f', rotulo: 'Sonda', nome: 'Lançar sonda' }];
+
 export const intro: CardDef = {
   eyebrow: 'Einstein · 1915 · Relatividade geral',
   ilus: 'tecido',
@@ -29,7 +33,10 @@ export const intro: CardDef = {
     '<p>Newton explicou como a gravidade age, mas não o que ela é. Em 1915, <b>Albert Einstein</b> propôs uma ideia nova: espaço e tempo formam juntos uma espécie de tecido, o <b>espaço-tempo</b>.</p>' +
     '<p>Esta grade é um modelo desse tecido, como o balão esticado no copo. Por enquanto ela está plana, porque não há nenhuma massa por perto.</p>' +
     '<p>Voe até o centro da grade e veja o que acontece.</p>',
-  dica: 'Aperte M a qualquer momento para ver de cima',
+  dica: porDispositivo(
+    'Aperte M a qualquer momento para ver de cima',
+    'Toque em Mapa a qualquer momento para ver de cima',
+  ),
 };
 
 export const curvatura: CardDef = {
@@ -39,7 +46,7 @@ export const curvatura: CardDef = {
   corpo:
     '<p>Quando o Sol aparece, a grade afunda em volta dele. Para Einstein, é isso que a massa faz: ela <b>curva o espaço-tempo</b>.</p>' +
     '<p>Quanto mais massa, mais funda a curva. A Terra também faz uma curvinha, bem menor.</p>' +
-    '<p>Agora lance sondas com a tecla <kbd>F</kbd>, em direções diferentes, e veja que caminho elas fazem.</p>',
+    `<p>Agora lance sondas ${porDispositivo('com a tecla <kbd>F</kbd>', 'com o botão <b>Sonda</b>')}, em direções diferentes, e veja que caminho elas fazem.</p>`,
   ef2:
     '<p>As equações de Einstein ligam a curvatura do espaço-tempo, do lado esquerdo, à matéria e à energia, do lado direito:</p>' +
     M.bloco(
@@ -49,7 +56,7 @@ export const curvatura: CardDef = {
         M.ind(M.v('T'), M.v('μν')),
     ) +
     '<p>Onde a gravidade é fraca, como no Sistema Solar, elas dão praticamente os mesmos resultados de Newton.</p>',
-  dica: 'Aperte F para lançar uma sonda',
+  dica: porDispositivo('Aperte F para lançar uma sonda', 'Toque em Sonda para lançar uma sonda'),
 };
 
 export const sondas: CardDef = {

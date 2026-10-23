@@ -1,12 +1,13 @@
 /** Textos da fase 4 (estrelas escuras). */
 import type { CardDef } from '@shared/ui/cards';
+import { porDispositivo } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
 
 export const NOME_FASE = 'Fase 4 · Estrelas escuras';
 
 export const MISSOES = {
   chegar: 'Aproxime-se da estrela gigante azul',
-  colapso: 'Clique em "Ver o fim da estrela"',
+  colapso: porDispositivo('Clique em "Ver o fim da estrela"', 'Toque em "Ver o fim da estrela"'),
   calculo: 'Desafio EF2 (opcional): o raio de Schwarzschild do Sol',
 };
 
