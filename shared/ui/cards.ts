@@ -30,7 +30,9 @@ export class Cards {
     private el: HTMLElement,
     private catalogo: CatalogoIlustracoes,
     private aoAbrir: () => void = () => {},
-  ) {}
+  ) {
+    el.classList.add('card--slide');
+  }
 
   get aberto(): boolean {
     return !this.camada.hidden;
@@ -81,6 +83,14 @@ export class Cards {
       `<button class="btn prim" data-card-ok>${c.botao ?? 'Continuar'} ↵</button></div>`;
     this.camada.hidden = false;
     this.aoAbrir();
+    const texto = this.el.querySelector<HTMLElement>('.texto');
+    if (texto) {
+      const marcaContinua = (): void => {
+        texto.classList.toggle('continua', texto.scrollTop + texto.clientHeight < texto.scrollHeight - 2);
+      };
+      texto.onscroll = marcaContinua;
+      requestAnimationFrame(marcaContinua);
+    }
     const canvas = this.el.querySelector('canvas');
     if (il && canvas)
       requestAnimationFrame(() => (this.pararIlus = rodaIlustracao(canvas, il, () => this.aberto)));
@@ -89,7 +99,8 @@ export class Cards {
       ok.onclick = () => {
         this.camada.hidden = true;
         c.aoFechar?.();
-        this.abreProximo();
+        // aoFechar pode ter aberto outro card (o resumo final, a introdução da fase seguinte): não fechar esse.
+        if (!this.aberto) this.abreProximo();
       };
       setTimeout(() => ok.focus(), 30);
     }

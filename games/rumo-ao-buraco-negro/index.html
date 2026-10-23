@@ -2,7 +2,10 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
     <title>Rumo ao Buraco Negro · Rapadura Cósmica</title>
     <meta
       name="description"
@@ -104,6 +107,7 @@
           <button class="btn" id="pCard">Rever último card (C)</button>
           <button class="btn" id="pReiniciar">Reiniciar a fase</button>
           <button class="btn" id="pMenu">Voltar ao menu</button>
+          <button class="btn" id="pTela">Tela cheia</button>
         </div>
         <p style="margin-top: 22px; color: var(--muted)">Gostou? Tem mais astronomia no canal:</p>
         <div id="linksPausa"></div>
@@ -171,6 +175,9 @@
         <div class="eyebrow">Celular em pé</div>
         <h2>Gire o celular</h2>
         <p>O jogo funciona com o celular deitado, para caber a nave e os controles.</p>
+        <div class="acoes" id="girarAcoes" hidden>
+          <button class="btn prim" id="btnGirar">Girar a tela</button>
+        </div>
       </div>
     </div>
 

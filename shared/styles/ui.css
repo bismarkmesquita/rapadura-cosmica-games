@@ -407,14 +407,15 @@ math[display='block'] {
 /* Telas baixas: celular deitado */
 @media (max-height: 500px) {
   .camada {
-    padding-block: 12px;
+    padding-block: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-bottom, 0px));
   }
   .card {
     padding: 16px 20px;
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.45;
   }
   .card h2 {
-    font-size: 24px;
+    font-size: 22px;
     margin: 4px 0 8px;
   }
   .card p {
@@ -423,14 +424,74 @@ math[display='block'] {
   .card .acoes {
     margin-top: 10px;
   }
-  /* A ilustração tem altura de 85% da largura: aqui a largura vem da altura da tela, para caber. */
-  .card.com-ilus .grade {
-    grid-template-columns: minmax(0, 1fr) min(260px, 48vh);
-    gap: 16px;
+  .card .dica {
+    font-size: 14px;
   }
-  .card figure {
+
+  /*
+   * Slide (Cards): nunca passa da altura da tela, com margem. O texto rola dentro do card se precisar, e o botão
+   * fica sempre à vista. Com ilustração, ela ocupa uma coluna à direita na altura toda do card.
+   */
+  .card--slide {
+    box-sizing: border-box;
+    width: min(780px, 100%);
+    max-height: calc(100dvh - 24px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    overflow: hidden;
+  }
+  .card--slide .grade {
+    display: contents;
+  }
+  .card--slide .texto {
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .card--slide .texto > :last-child {
+    margin-bottom: 0;
+  }
+  /* Texto que continua abaixo: a borda esmaece para mostrar que dá para rolar (classe posta em cards.ts). */
+  .card--slide .texto.continua {
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+  }
+  /* A ilustração tem altura de 85% da largura: a largura sai da altura disponível, menos a legenda. */
+  .card--slide.com-ilus {
+    grid-template-columns: minmax(0, 1fr) min(300px, 34vw, calc((100dvh - 140px) * 1.15));
+    column-gap: 20px;
+  }
+  .card--slide.com-ilus > .eyebrow,
+  .card--slide.com-ilus > h2,
+  .card--slide.com-ilus .texto,
+  .card--slide.com-ilus > .acoes {
+    grid-column: 1;
+  }
+  .card--slide.com-ilus figure {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
     order: 0;
     max-width: none;
+  }
+  .card--slide figcaption {
+    font-size: 13px;
+  }
+}
+@media (max-height: 420px) {
+  .card {
+    padding: 12px 18px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .card h2 {
+    font-size: 19px;
+    margin: 2px 0 6px;
+  }
+  .card p {
+    margin-bottom: 6px;
+  }
+  .card .acoes {
+    margin-top: 8px;
   }
 }
 

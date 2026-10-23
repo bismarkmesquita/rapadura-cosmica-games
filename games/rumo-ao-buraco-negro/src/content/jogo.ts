@@ -10,6 +10,9 @@ export const AVISOS_CAMERA = {
   telaCheia: 'Tela cheia não disponível aqui',
 };
 
+/** Rótulo dos botões de tela cheia (menu, pausa e canto da tela), conforme o estado. */
+export const TELA_CHEIA = { entrar: 'Tela cheia', sair: 'Sair da tela cheia' };
+
 /** Controles na tela, no celular. Os botões de cada fase ficam no content/ da fase (TOQUE). */
 export const TOQUE = {
   direcao: [

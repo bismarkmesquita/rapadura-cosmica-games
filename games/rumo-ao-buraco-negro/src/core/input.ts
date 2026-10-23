@@ -22,7 +22,19 @@ export function soltaTudo(): void {
   teclado.clear();
   mouse.down = false;
   mouse.dir = false;
+  mouse.dentro = false;
 }
+
+/**
+ * Depois de um toque, vários navegadores de celular disparam também eventos de mouse "de cópia". Para o jogo eles
+ * viram acelerar e virar na direção do dedo, então são ignorados por um instante depois de cada toque.
+ */
+const COPIA_DO_TOQUE_MS = 1000;
+let ultimoToque = -Infinity;
+const copiaDoToque = (): boolean => performance.now() - ultimoToque < COPIA_DO_TOQUE_MS;
+const marcaToque = (e: PointerEvent): void => {
+  if (e.pointerType === 'touch') ultimoToque = performance.now();
+};
 
 interface Manipuladores {
   /** Chamado em cada tecla pressionada (fora de campos de texto), já em minúsculas. */
@@ -92,7 +104,10 @@ export function iniciaEntrada(alvo: HTMLElement, m: Manipuladores): void {
   });
   addEventListener('keyup', (e) => teclado.delete(e.key.toLowerCase()));
   addEventListener('blur', soltaTudo);
+  addEventListener('pointerdown', marcaToque, true);
+  addEventListener('pointerup', marcaToque, true);
   alvo.addEventListener('mousemove', (e) => {
+    if (copiaDoToque()) return;
     const dx = e.clientX - mouse.lx;
     const dy = e.clientY - mouse.ly;
     mouse.lx = e.clientX;
@@ -107,6 +122,7 @@ export function iniciaEntrada(alvo: HTMLElement, m: Manipuladores): void {
   });
   alvo.addEventListener('mouseleave', () => (mouse.dentro = false));
   alvo.addEventListener('mousedown', (e) => {
+    if (copiaDoToque()) return;
     mouse.lx = e.clientX;
     mouse.ly = e.clientY;
     if (e.button === 0) mouse.down = true;

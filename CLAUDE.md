@@ -200,12 +200,28 @@ em telas de toque sem mouse (`telaDeToque()`); no computador nada muda.
 - Os botões **apertam teclas virtuais** (`shared/ui/toque.ts::ControlesToque`): o toque entra em `aoTeclar` e no
   conjunto `teclado` como o teclado, então fases e física não sabem de onde veio o comando. Os botões fixos ficam em
   `content/jogo.ts` (`TOQUE`); uma fase com teclas próprias exporta `TOQUE` no seu `content/` e chama
-  `toqueDaFase(T.TOQUE)` no `init`, junto de `teclasDaFase` (Kepler: Elipses e Tempo; Einstein: Sonda).
+  `toqueDaFase(T.TOQUE)` no `init`, junto de `teclasDaFase` (ex.: Sonda, na fase de Einstein).
 - Os gestos na cena ficam em `core/input.ts::iniciaGestos` (eventos de ponteiro com `preventDefault`, para o
   navegador não gerar também eventos de mouse).
 - No celular o HUD é compacto: as missões mostram só a atual, e "Você está perto de…" vai para o alto, ao centro.
-  Painéis grandes (canhão, painel de ação) ficam no centro, com rolagem.
-- Teste com emulação de celular deitado (por exemplo 844×390 e 667×375, com toque) e num aparelho de verdade.
+  O painel de ação fica no centro, com rolagem; o canhão de Newton fica à direita, acima dos botões, compacto (e
+  esconde o painel da nave enquanto está aberto).
+- **Sem zoom da página**: `touch-action: none` no corpo e no canvas (só camadas, texto do slide e painéis rolam na
+  vertical) e `maximum-scale=1` no viewport (também evita o zoom do iPhone ao tocar num campo do desafio EF2).
+- **Toque não vira mouse**: muitos celulares disparam eventos de mouse "de cópia" depois de um toque; `core/input.ts`
+  ignora mouse por 1 s depois de cada toque, senão o toque acelera e vira a nave para o dedo.
+- **Slides cabem na tela** (`.card--slide`, em `shared/styles/ui.css`, telas com até 500 px de altura): o card tem
+  margem e nunca passa da altura da tela; a ilustração vai para uma coluna à direita; se o texto não couber, ele rola
+  dentro do card com a borda esmaecida, e o botão fica sempre à vista. Escreva cards curtos: com 14 px de letra, um
+  card de 3 parágrafos curtos cabe inteiro num celular deitado em tela cheia.
+- **Ilustrações**: desenhe pensando em pelo menos 300 px de largura (`LARGURA_MIN` em `shared/ui/illustration.ts`);
+  em canvas mais estreito a cena inteira é reduzida, para os rótulos não se encostarem. Rótulos lado a lado devem
+  caber nessa largura.
+- **Celular em pé**: o aviso "Gire o celular" tem o botão "Girar a tela" onde o navegador deixa (Android: tela cheia
+  - `screen.orientation.lock`); no iPhone não há como girar pela página, então fica só o aviso.
+- Teste com emulação de celular deitado (por exemplo 915×412, 844×390 e 667×375, com toque) e num aparelho de
+  verdade. Para abrir o `npm run dev` no celular, rode `npx vite --host` e use o endereço "Network" que o Vite
+  mostra (o IP do computador), com o caminho do jogo; o Firewall do Windows precisa liberar o Node na rede privada.
 
 ## Qualidade
 

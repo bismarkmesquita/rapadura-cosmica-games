@@ -9,7 +9,7 @@ import { scene } from '../core/engine';
 import { estado, nave, posicionaNave } from '../core/estado';
 import { iniciaCamera, rig } from '../core/camera';
 import { controlaNave, registraTrilha } from '../core/ship';
-import { cards, info, missoes, painel, teclasDaFase, toast, toqueDaFase } from '../core/ui';
+import { cards, info, missoes, painel, teclasDaFase, toast } from '../core/ui';
 import { desenhaAlvo, rotulo3D } from '../core/overlay';
 import { fluxo } from '../core/flow';
 import { brilho } from '../scene/sprites';
@@ -189,7 +189,6 @@ export class FaseKepler implements Fase {
       { id: 'terra', texto: T.MISSOES.terra, alvo: () => this.alvoPlaneta('Terra') },
     ]);
     teclasDaFase(T.TECLAS);
-    toqueDaFase(T.TOQUE);
     cards.enfileira(T.intro);
   }
 

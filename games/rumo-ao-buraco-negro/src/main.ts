@@ -29,7 +29,7 @@ import { fluxo } from './core/flow';
 import { criaCeu, syncCeu } from './scene/stars';
 import { descartaGrupo } from './scene/common';
 import { FASES, kepler } from './phases';
-import { AVISOS_CAMERA } from './content/jogo';
+import { AVISOS_CAMERA, TELA_CHEIA } from './content/jogo';
 
 const ORIGEM = new THREE.Vector3();
 const alvoCamera = new THREE.Vector3();
@@ -152,10 +152,33 @@ function ligaMenus(): void {
     cards.revisa();
   };
   $('btnPausa').onclick = alternaPausa;
-  $('btnTela').onclick = telaCheia;
-  $('btnTela2').onclick = telaCheia;
-  // O Safari do iPhone não deixa a página entrar em tela cheia.
-  if (!document.fullscreenEnabled) $('btnTela').hidden = $('btnTela2').hidden = true;
+  const botoesTelaCheia = ['btnTela', 'btnTela2', 'pTela'].map((id) => $(id));
+  for (const b of botoesTelaCheia) {
+    b.onclick = telaCheia;
+    // O Safari do iPhone não deixa a página entrar em tela cheia.
+    if (!document.fullscreenEnabled) b.hidden = true;
+  }
+  document.addEventListener('fullscreenchange', () => {
+    const rotulo = document.fullscreenElement ? TELA_CHEIA.sair : TELA_CHEIA.entrar;
+    for (const b of botoesTelaCheia) b.textContent = rotulo;
+  });
+}
+
+/** `lock` não está nos tipos do TypeScript: só existe em alguns navegadores (Chrome do Android, em tela cheia). */
+const orientacao = screen.orientation as ScreenOrientation & { lock?: (o: 'landscape') => Promise<void> };
+
+/** Botão "Girar a tela" no aviso de celular em pé. O iPhone não deixa a página girar a tela: lá fica só o aviso. */
+function ligaGirarTela(): void {
+  if (!document.fullscreenEnabled || typeof orientacao?.lock !== 'function') return;
+  $('girarAcoes').hidden = false;
+  $('btnGirar').onclick = async () => {
+    try {
+      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      await orientacao.lock?.('landscape');
+    } catch {
+      $('girarAcoes').hidden = true;
+    }
+  };
 }
 
 function ligaControlesDeToque(): void {
@@ -165,6 +188,7 @@ function ligaControlesDeToque(): void {
     apertada: (t) => teclado.has(t),
   });
   iniciaGestos(canvas, { aoArrastar: arrastaCamera, aoRolar: rolaCamera, aponta: () => rig.modo === 'mapa' });
+  ligaGirarTela();
   // Só funciona deitado: ao pôr o celular em pé (aparece o aviso "Gire o celular"), o jogo pausa.
   matchMedia('(orientation: portrait)').addEventListener('change', (e) => {
     if (e.matches && estado.fase && !estado.pausado && !cards.aberto) alternaPausa();
