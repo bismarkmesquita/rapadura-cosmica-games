@@ -3,6 +3,7 @@
  * Fórmulas usam o construtor M (MathML); veja shared/math/mathml.ts.
  */
 import type { CardDef } from '@shared/ui/cards';
+import { porDispositivo, type BotaoToque } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
 import { fmt } from '@shared/math/format';
 
@@ -27,6 +28,13 @@ export const TECLAS: [string, string][] = [
   ['C', 'rever card'],
 ];
 
+/** Botões desta fase nos controles de toque. */
+export const TOQUE: BotaoToque[] = [
+  { tecla: 'e', rotulo: 'Elipses' },
+  { tecla: '[', rotulo: 'Tempo −', nome: 'Tempo mais devagar' },
+  { tecla: ']', rotulo: 'Tempo +', nome: 'Tempo mais rápido' },
+];
+
 export const intro: CardDef = {
   eyebrow: 'Fase 1 · Século XVII',
   ilus: 'sistema',
@@ -35,7 +43,10 @@ export const intro: CardDef = {
     '<p>Os planetas giram em volta do Sol sem parar. Mas por que eles se movem exatamente desse jeito?</p>' +
     '<p>No começo dos anos 1600, o astrônomo alemão <b>Johannes Kepler</b> passou anos estudando as medidas de Tycho Brahe sobre a posição de Marte e descobriu regras muito precisas para esse movimento.</p>' +
     '<p>Sua missão é visitar os planetas e descobrir essas regras com Kepler. Nesta fase, os motores da nave são tão fortes que a gravidade do Sol nem é sentida.</p>',
-  dica: 'Mova o mouse para os lados para virar e acelere com W',
+  dica: porDispositivo(
+    'Mova o mouse para os lados para virar e acelere com W',
+    'Use ◀ ▶ para virar e segure Acelerar',
+  ),
 };
 
 export const lei1: CardDef = {
@@ -45,7 +56,7 @@ export const lei1: CardDef = {
   corpo:
     '<p>Durante séculos, as pessoas acharam que os planetas andavam em círculos perfeitos. Kepler mostrou que as órbitas são <b>elipses</b>, uma espécie de círculo achatado.</p>' +
     '<p>O Sol não fica no centro: ele fica num ponto especial chamado <b>foco</b>. Toda elipse tem dois focos, e o outro fica vazio. Agora o foco vazio da órbita de Marte aparece marcado no espaço.</p>' +
-    '<p>As órbitas reais são quase redondas. Aperte <kbd>E</kbd> para exagerar o achatamento e enxergar melhor.</p>',
+    `<p>As órbitas reais são quase redondas. ${porDispositivo('Aperte <kbd>E</kbd>', 'Toque em <b>Elipses</b>')} para exagerar o achatamento e enxergar melhor.</p>`,
   ef2:
     '<p>Em qualquer ponto da elipse, a soma das distâncias aos dois focos é igual ao eixo maior:</p>' +
     M.bloco(M.ind(M.v('d'), M.n(1)) + M.o('+') + M.ind(M.v('d'), M.n(2)) + M.o('=') + M.n(2) + M.v('a')) +
@@ -69,7 +80,7 @@ export const lei1: CardDef = {
         M.v('e') +
         M.o(')'),
     ),
-  dica: 'Aperte M para ver a órbita de cima',
+  dica: porDispositivo('Aperte M para ver a órbita de cima', 'Toque em Mapa para ver a órbita de cima'),
 };
 
 export const lei2: CardDef = {
@@ -96,7 +107,7 @@ export const lei2: CardDef = {
         ),
     ) +
     '<p>Mercúrio vai de cerca de 39 km/s, no ponto mais distante, a 59 km/s, no mais próximo. Olhe o painel quando estiver perto dele.</p>',
-  dica: 'Aperte M para ver as fatias de cima',
+  dica: porDispositivo('Aperte M para ver as fatias de cima', 'Toque em Mapa para ver as fatias de cima'),
 };
 
 export function lei3(planetas: { n: string; a: number; T: number }[]): CardDef {

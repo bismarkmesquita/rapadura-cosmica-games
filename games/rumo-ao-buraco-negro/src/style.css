@@ -203,3 +203,170 @@ body {
     display: none;
   }
 }
+
+/* Controles de toque: só em celular e tablet (body.toque), com o aparelho deitado */
+#toque {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+}
+.toque-grupo {
+  position: absolute;
+  display: flex;
+  gap: 10px;
+}
+.toque-grupo .btn-toque {
+  pointer-events: auto;
+}
+.toque-sistema {
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  left: max(14px, env(safe-area-inset-left, 0px));
+}
+.toque-sistema .btn-toque {
+  height: 40px;
+  min-width: 44px;
+  padding: 0 12px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+.toque-direcao {
+  left: max(16px, env(safe-area-inset-left, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+.toque-direcao .btn-toque {
+  width: 76px;
+  height: 76px;
+  font-size: 26px;
+}
+.toque-motor {
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  flex-direction: column;
+  align-items: flex-end;
+}
+.toque-extras,
+.toque-pedais {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.toque-extras .btn-toque {
+  height: 44px;
+  font-size: 14px;
+}
+.btn-toque--principal {
+  width: 112px;
+  height: 84px;
+  font-size: 18px;
+}
+/* Na fase de Newton a câmera fica sempre vista de cima: Câmera e Mapa não fazem nada. */
+.camera-fixa .so-com-camera-livre {
+  display: none;
+}
+
+/* HUD mais compacto e longe dos botões */
+.toque #topoBtns,
+.toque #teclas,
+.toque #seloJogo {
+  display: none;
+}
+.toque .hud {
+  font-size: 13px;
+}
+.toque .hud .box {
+  padding: 8px 10px;
+}
+.toque #missoes {
+  top: calc(60px + env(safe-area-inset-top, 0px));
+  max-width: min(280px, 30vw);
+}
+/* Na tela pequena, as missões viram um objetivo: só a atual aparece. */
+.toque #missoes li:not(.atual) {
+  display: none;
+}
+.toque #painel {
+  min-width: 0;
+  max-width: min(300px, 34vw);
+}
+.toque #info {
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(320px, 34vw);
+}
+.toque #info h3 {
+  font-size: 16px;
+}
+.toque .painel-acao,
+.toque #canhao {
+  top: calc(60px + env(safe-area-inset-top, 0px));
+  bottom: auto;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: min(340px, 46vw);
+}
+.toque .painel-acao .box,
+.toque #canhao .box {
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+}
+
+/* Menu: instruções de toque no lugar das teclas */
+.controles--toque {
+  display: none;
+}
+.toque .controles {
+  display: none;
+}
+.toque .controles--toque {
+  display: grid;
+}
+
+/* Aviso "Gire o celular" */
+#gire {
+  display: none;
+  z-index: 30;
+  text-align: center;
+  background: var(--void);
+}
+@media (orientation: portrait) {
+  .toque #gire {
+    display: grid;
+  }
+}
+
+/* Menu em telas baixas (celular deitado) */
+@media (max-height: 500px) {
+  #menu h1 {
+    font-size: 34px;
+    margin: 4px 0 6px;
+  }
+  .fases {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    margin: 10px 0;
+  }
+  .fase {
+    padding: 8px;
+  }
+  .fase b {
+    font-size: 15px;
+  }
+  .fase small {
+    display: none;
+  }
+  .controles {
+    font-size: 13px;
+  }
+  .toque #painel {
+    font-size: 12px;
+  }
+}
+@media (max-height: 420px) {
+  #menu .card > p {
+    display: none;
+  }
+}

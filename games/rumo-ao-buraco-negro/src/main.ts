@@ -10,10 +10,20 @@ import { $ } from '@shared/ui/dom';
 import { linksCanal, seloCanal } from '@shared/brand/selo';
 import { canvas, iniciaRenderer, limpaOverlay, renderiza } from './core/engine';
 import { estado, nave } from './core/estado';
-import { iniciaEntrada, mouse, soltaTudo, teclado } from './core/input';
+import { iniciaEntrada, iniciaGestos, mouse, soltaTudo, teclado } from './core/input';
 import { arrastaCamera, atualizaCamera, entraMapa, rig, rolaCamera, saiMapa, Y0 } from './core/camera';
 import { criaModeloNave, syncNave } from './core/ship';
-import { acao, atualizaVisibilidadeHud, cards, info, toast } from './core/ui';
+import {
+  acao,
+  atualizaVisibilidadeHud,
+  cards,
+  info,
+  ligaToque,
+  sincronizaToque,
+  toast,
+  toque,
+  toqueDaFase,
+} from './core/ui';
 import { desenhaMira } from './core/overlay';
 import { fluxo } from './core/flow';
 import { criaCeu, syncCeu } from './scene/stars';
@@ -32,6 +42,7 @@ function trocaCena(): void {
   }
   acao.esconde();
   info(null);
+  toqueDaFase([]);
   $('canhao').hidden = true;
 }
 
@@ -77,10 +88,11 @@ function telaCheia(): void {
   else document.documentElement.requestFullscreen?.().catch(() => toast.mostra(AVISOS_CAMERA.telaCheia));
 }
 
-function aoTeclar(k: string, e: KeyboardEvent): void {
+/** Teclado e botões de toque passam por aqui (os botões não têm evento de teclado). */
+function aoTeclar(k: string, e?: KeyboardEvent): void {
   if (cards.aberto) {
     if (k === 'enter' || k === ' ') {
-      e.preventDefault();
+      e?.preventDefault();
       cards.confirma();
     }
     return;
@@ -88,7 +100,7 @@ function aoTeclar(k: string, e: KeyboardEvent): void {
   if (k === 'escape') return alternaPausa();
   if (!$('menu').hidden || estado.pausado) return;
   teclado.add(k);
-  if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
+  if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e?.preventDefault();
   if (['a', 'd', 'arrowleft', 'arrowright'].includes(k)) mouse.mirar = false;
   const f = estado.fase;
   if (k === 'h') {
@@ -142,6 +154,21 @@ function ligaMenus(): void {
   $('btnPausa').onclick = alternaPausa;
   $('btnTela').onclick = telaCheia;
   $('btnTela2').onclick = telaCheia;
+  // O Safari do iPhone não deixa a página entrar em tela cheia.
+  if (!document.fullscreenEnabled) $('btnTela').hidden = $('btnTela2').hidden = true;
+}
+
+function ligaControlesDeToque(): void {
+  ligaToque({
+    aperta: (t) => aoTeclar(t),
+    solta: (t) => teclado.delete(t),
+    apertada: (t) => teclado.has(t),
+  });
+  iniciaGestos(canvas, { aoArrastar: arrastaCamera, aoRolar: rolaCamera, aponta: () => rig.modo === 'mapa' });
+  // Só funciona deitado: ao pôr o celular em pé (aparece o aviso "Gire o celular"), o jogo pausa.
+  matchMedia('(orientation: portrait)').addEventListener('change', (e) => {
+    if (e.matches && estado.fase && !estado.pausado && !cards.aberto) alternaPausa();
+  });
 }
 
 let tAnterior = performance.now();
@@ -178,6 +205,7 @@ function quadro(agora: number): void {
     desenhaMira();
   } else kepler.overlay();
   toast.tick(dt);
+  sincronizaToque();
   requestAnimationFrame(quadro);
 }
 
@@ -188,6 +216,7 @@ function inicia(): void {
   criaModeloNave();
   ligaMenus();
   iniciaEntrada(canvas, { aoTeclar, aoArrastar: arrastaCamera, aoRolar: rolaCamera });
+  if (toque) ligaControlesDeToque();
   montaFundoMenu();
   requestAnimationFrame(quadro);
 }

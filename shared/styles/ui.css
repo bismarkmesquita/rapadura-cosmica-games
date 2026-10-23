@@ -404,6 +404,61 @@ math[display='block'] {
     font-size: 17px;
   }
 }
+/* Telas baixas: celular deitado */
+@media (max-height: 500px) {
+  .camada {
+    padding-block: 12px;
+  }
+  .card {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+  .card h2 {
+    font-size: 24px;
+    margin: 4px 0 8px;
+  }
+  .card p {
+    margin-bottom: 8px;
+  }
+  .card .acoes {
+    margin-top: 10px;
+  }
+  /* A ilustração tem altura de 85% da largura: aqui a largura vem da altura da tela, para caber. */
+  .card.com-ilus .grade {
+    grid-template-columns: minmax(0, 1fr) min(260px, 48vh);
+    gap: 16px;
+  }
+  .card figure {
+    order: 0;
+    max-width: none;
+  }
+}
+
+/* Botões dos controles de toque (shared/ui/toque.ts) */
+.btn-toque {
+  min-width: 56px;
+  height: 56px;
+  padding: 0 16px;
+  border-radius: 16px;
+  background: rgba(31, 27, 46, 0.72);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 16px;
+  backdrop-filter: blur(6px);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-toque.ativo {
+  background: var(--sol);
+  border-color: var(--sol);
+  color: #1b1205;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .toast {
     transition: none;

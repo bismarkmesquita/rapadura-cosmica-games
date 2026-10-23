@@ -1,5 +1,6 @@
 /** Textos da fase 2 (Newton). */
 import type { CardDef } from '@shared/ui/cards';
+import { porDispositivo } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
 
 export const NOME_FASE = 'Fase 2 · Newton';
@@ -77,7 +78,7 @@ export const canhao: CardDef = {
     M.bloco(vOrbita + M.o('≈') + M.n('7,9') + M.t(' km/s')) +
     M.bloco(vEscape + M.o('≈') + M.n('11,2') + M.t(' km/s')) +
     '<p>Acima da velocidade de escape, a bala sai da Terra para sempre. Abra o desafio no painel do canhão e calcule você mesmo.</p>',
-  dica: 'Aperte F para disparar',
+  dica: porDispositivo('Aperte F para disparar', 'Toque em Disparar'),
 };
 
 export const orbitaBala: CardDef = {
@@ -87,7 +88,7 @@ export const orbitaBala: CardDef = {
   corpo:
     '<p>A bala continua sendo puxada pela Terra o tempo todo. Ela está caindo! Mas anda tão rápido de lado que o chão sempre "foge" de baixo dela.</p>' +
     '<p>É exatamente assim que a Lua gira em volta da Terra, e a Terra em volta do Sol. As regras de Kepler saem todas dessa ideia.</p>' +
-    '<p>Agora é a sua vez: clique em <b>Decolar com a nave</b> e tente dar uma volta completa na Terra.</p>',
+    `<p>Agora é a sua vez: ${porDispositivo('clique', 'toque')} em <b>Decolar com a nave</b> e tente dar uma volta completa na Terra.</p>`,
   ef2:
     '<p>Numa órbita circular, a gravidade faz o papel de força centrípeta:</p>' +
     M.bloco(

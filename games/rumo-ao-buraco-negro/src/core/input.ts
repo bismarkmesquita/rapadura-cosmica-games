@@ -31,6 +31,60 @@ interface Manipuladores {
   aoRolar(deltaY: number): void;
 }
 
+/** Quanto a pinça de dois dedos vale em "giros da roda do mouse" (rolaCamera). */
+const PINCA_PARA_RODA = 3;
+
+/**
+ * Gestos na cena em telas de toque: um dedo olha em volta (ou, no mapa, aponta para onde a nave vai, como o
+ * mouse) e dois dedos aproximam e afastam a câmera.
+ */
+export function iniciaGestos(
+  alvo: HTMLElement,
+  m: Omit<Manipuladores, 'aoTeclar'> & { aponta(): boolean },
+): void {
+  const dedos = new Map<number, [number, number]>();
+  let distancia = 0;
+  const distDedos = (): number => {
+    const [a, b] = [...dedos.values()];
+    return Math.hypot(a[0] - b[0], a[1] - b[1]);
+  };
+  const mira = (e: PointerEvent): void => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouse.mirar = true;
+  };
+  const solta = (e: PointerEvent): void => {
+    dedos.delete(e.pointerId);
+    if (!dedos.size) mouse.dir = false;
+  };
+
+  alvo.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'touch') return;
+    // Sem isto o navegador também gera eventos de mouse, e o toque viraria "acelerar" e "virar para o dedo".
+    e.preventDefault();
+    alvo.setPointerCapture(e.pointerId);
+    dedos.set(e.pointerId, [e.clientX, e.clientY]);
+    if (dedos.size === 2) distancia = distDedos();
+    else if (m.aponta()) mira(e);
+  });
+  alvo.addEventListener('pointermove', (e) => {
+    const antes = dedos.get(e.pointerId);
+    if (!antes) return;
+    dedos.set(e.pointerId, [e.clientX, e.clientY]);
+    if (dedos.size === 2) {
+      const d = distDedos();
+      m.aoRolar((distancia - d) * PINCA_PARA_RODA);
+      distancia = d;
+    } else if (m.aponta()) mira(e);
+    else {
+      mouse.dir = true;
+      m.aoArrastar(e.clientX - antes[0], e.clientY - antes[1]);
+    }
+  });
+  alvo.addEventListener('pointerup', solta);
+  alvo.addEventListener('pointercancel', solta);
+}
+
 export function iniciaEntrada(alvo: HTMLElement, m: Manipuladores): void {
   addEventListener('keydown', (e) => {
     if ((e.target as HTMLElement).tagName === 'INPUT') return;
