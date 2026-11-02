@@ -85,9 +85,35 @@ body,
   font-size: 14px;
   white-space: nowrap;
 }
+/* A barra fica com o espaço que sobra ao lado do rótulo e do valor (width: 100% empurraria o valor para fora). */
 #controles input[type='range'] {
-  width: 100%;
+  flex: 1 1 60px;
+  width: auto;
+  min-width: 60px;
   accent-color: var(--sol);
+}
+#controles .pergunta {
+  flex: 1 1 100%;
+  margin: 0;
+}
+#controles .res {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 14px;
+  color: var(--alerta);
+}
+#controles .res:empty {
+  display: none;
+}
+#controles output {
+  min-width: 5.5em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+#controles .curto {
+  display: none;
+  color: var(--ink);
+  font-weight: 700;
 }
 #controles .opcoes {
   display: flex;
@@ -256,9 +282,15 @@ body,
   #controles .box {
     gap: 6px 10px;
   }
-  /* A barra fala por si (e tem aria-label): sem o rótulo, barra e botões cabem numa linha. */
-  #controles .faixa span {
+  /* Rótulo curto (ou nenhum) no lugar do longo, para barras e botões caberem numa linha; a barra tem aria-label. */
+  #controles .longo {
     display: none;
+  }
+  #controles .curto {
+    display: inline;
+  }
+  #controles output {
+    min-width: 0;
   }
   #controles .faixa {
     flex-basis: 160px;

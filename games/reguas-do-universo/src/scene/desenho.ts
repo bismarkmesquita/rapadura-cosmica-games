@@ -21,6 +21,35 @@ export function sol(c: Ctx, x: number, y: number, r: number): void {
   c.fill();
 }
 
+/** Estrela com brilho em volta. */
+export function estrela(c: Ctx, x: number, y: number, r: number, cor: string): void {
+  c.save();
+  c.shadowColor = cor;
+  c.shadowBlur = r * 4;
+  c.fillStyle = cor;
+  c.beginPath();
+  c.arc(x, y, r, 0, TAU);
+  c.fill();
+  c.restore();
+}
+
+/** Lâmpada acesa: o brilho em volta cresce com `forca` (de 0 a 1). */
+export function lampada(c: Ctx, x: number, y: number, r: number, forca: number): void {
+  const g = c.createRadialGradient(x, y, r * 0.3, x, y, r * (2 + 3 * forca));
+  g.addColorStop(0, `rgba(255,220,140,${0.35 + 0.4 * forca})`);
+  g.addColorStop(1, 'rgba(255,190,90,0)');
+  c.fillStyle = g;
+  c.beginPath();
+  c.arc(x, y, r * (2 + 3 * forca), 0, TAU);
+  c.fill();
+  c.fillStyle = '#fff3d1';
+  c.beginPath();
+  c.arc(x, y, r, 0, TAU);
+  c.fill();
+  c.fillStyle = '#8d8e97';
+  c.fillRect(x + r * 0.7, y - r * 0.45, r * 0.9, r * 0.9);
+}
+
 /** Moeda de 1 real vista de frente. */
 export function moeda(c: Ctx, x: number, y: number, r: number): void {
   const g = c.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);

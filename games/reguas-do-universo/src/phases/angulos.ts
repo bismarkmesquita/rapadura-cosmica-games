@@ -83,7 +83,7 @@ export class FaseAngulos implements Fase {
       )
       .join('');
     controles(
-      `<label class="faixa"><span>${o.distancia}</span>` +
+      `<label class="faixa"><span class="longo">${o.distancia}</span>` +
         `<input type="range" min="0" max="1000" value="${Math.round(this.pos * 1000)}" aria-label="${o.distancia}"></label>` +
         // Os botões ocupam o lugar desde o começo, para a caixa (e a cena acima dela) não mudar de altura.
         `<div class="opcoes${comMoeda ? '' : ' invisivel'}">${botoes}</div>`,

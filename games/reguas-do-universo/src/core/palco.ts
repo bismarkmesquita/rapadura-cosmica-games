@@ -10,10 +10,22 @@ export const tela = { W: innerWidth, H: innerHeight };
 const reduzMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const caixaControles = $('controles');
 
+const visivel = (el: HTMLElement): boolean => !el.hidden && !el.classList.contains('vazio');
+
 /** Altura da tela acima da caixa de controles da fase: as cenas cabem aí, sem ficar embaixo dos controles. */
 export function alturaLivre(): number {
-  if (caixaControles.hidden || caixaControles.classList.contains('vazio')) return tela.H;
+  if (!visivel(caixaControles)) return tela.H;
   return Math.min(tela.H, caixaControles.getBoundingClientRect().top - 8);
+}
+
+const baseDe = (id: string): number => {
+  const el = $(id);
+  return visivel(el) ? el.getBoundingClientRect().bottom : 0;
+};
+
+/** Onde a cena pode começar, abaixo das caixas do topo: missões à esquerda, botões e painel à direita. */
+export function topoLivre(): { esquerda: number; direita: number } {
+  return { esquerda: baseDe('missoes') + 8, direita: Math.max(baseDe('topoBtns'), baseDe('painel')) + 8 };
 }
 
 export function ajustaTela(): void {
