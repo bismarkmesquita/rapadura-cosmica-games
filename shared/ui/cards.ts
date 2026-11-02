@@ -19,6 +19,13 @@ export interface CardDef {
   aoFechar?: (() => void) | null;
 }
 
+/** Como aparece o bloco `ef2`. Um jogo com modo Avançado mostra o bloco aberto, e só com o modo ligado. */
+export interface OpcoesAprofundar {
+  rotulo: string;
+  visivel: () => boolean;
+  aberto?: boolean;
+}
+
 /** Fila de cards: um card por vez, na ordem em que foram pedidos. */
 export class Cards {
   private fila: (CardDef & { revisao?: boolean })[] = [];
@@ -30,6 +37,7 @@ export class Cards {
     private el: HTMLElement,
     private catalogo: CatalogoIlustracoes,
     private aoAbrir: () => void = () => {},
+    private aprofundar: OpcoesAprofundar = { rotulo: 'Aprofundar (EF2)', visivel: () => true },
   ) {
     el.classList.add('card--slide');
   }
@@ -71,11 +79,14 @@ export class Cards {
     }
     if (!c.revisao) this.ultimo = c;
     const il = c.ilus ? this.catalogo[c.ilus] : undefined;
+    const ap = this.aprofundar;
     this.el.classList.toggle('com-ilus', !!il);
     this.el.innerHTML =
       `<div class="eyebrow">${c.eyebrow ?? ''}</div><h2>${c.titulo}</h2>` +
       `<div class="grade"><div class="texto">${c.corpo}` +
-      (c.ef2 ? `<details class="ef2"><summary>Aprofundar (EF2)</summary><div>${c.ef2}</div></details>` : '') +
+      (c.ef2 && ap.visivel()
+        ? `<details class="ef2"${ap.aberto ? ' open' : ''}><summary>${ap.rotulo}</summary><div>${c.ef2}</div></details>`
+        : '') +
       `</div>` +
       (il ? `<figure><canvas aria-hidden="true"></canvas><figcaption>${il.leg}</figcaption></figure>` : '') +
       `</div><div class="acoes">` +

@@ -4,9 +4,10 @@ Jogos de astronomia para o navegador, feitos para as aulas do canal
 [Rapadura Cósmica](https://rapaduracosmica.com.br). O catálogo fica no site, em
 **rapaduracosmica.com.br/games**; este repositório só publica os jogos e o `catalogo.json` que o site lê.
 
-| Jogo                                                | Aula           | Turmas    |
-| --------------------------------------------------- | -------------- | --------- |
-| [Rumo ao Buraco Negro](games/rumo-ao-buraco-negro/) | Buracos negros | EF1 e EF2 |
+| Jogo                                                | Aula                           | Turmas    |
+| --------------------------------------------------- | ------------------------------ | --------- |
+| [Rumo ao Buraco Negro](games/rumo-ao-buraco-negro/) | Buracos negros                 | EF1 e EF2 |
+| [Réguas do Universo](games/reguas-do-universo/)     | Fluxo, magnitudes e distâncias | EF2 e EM  |
 
 ## Rodar no computador
 

@@ -48,6 +48,31 @@ export function luazinha(c: Ctx, x: number, y: number, r: number): void {
   c.fill();
 }
 
+/** Olho de frente, olhando para a direita (o observador nas cenas vistas de lado). `r` é meia largura. */
+export function olho(c: Ctx, x: number, y: number, r: number): void {
+  c.save();
+  c.beginPath();
+  c.moveTo(x - r, y);
+  c.quadraticCurveTo(x, y - r * 1.05, x + r, y);
+  c.quadraticCurveTo(x, y + r * 1.05, x - r, y);
+  c.closePath();
+  c.fillStyle = COR.ink;
+  c.fill();
+  c.strokeStyle = COR.muted;
+  c.lineWidth = Math.max(1, r * 0.08);
+  c.stroke();
+  c.clip();
+  c.fillStyle = '#3f7fd0';
+  c.beginPath();
+  c.arc(x + r * 0.25, y, r * 0.42, 0, TAU);
+  c.fill();
+  c.fillStyle = '#0b0f1e';
+  c.beginPath();
+  c.arc(x + r * 0.3, y, r * 0.2, 0, TAU);
+  c.fill();
+  c.restore();
+}
+
 export function seta(c: Ctx, x1: number, y1: number, x2: number, y2: number, cor: string, lw = 2): void {
   if (Math.hypot(x2 - x1, y2 - y1) < 2) return;
   c.strokeStyle = cor;
