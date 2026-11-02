@@ -3,7 +3,6 @@
   "titulo": "Réguas do Universo",
   "resumo": "Meça o céu com ângulos, paralaxe, brilho e magnitudes, e suba a escada de distâncias até outras galáxias.",
   "aula": "Fluxo, magnitudes e distâncias",
-  "turmas": ["EF2", "EM"],
   "temas": ["Diâmetro angular", "Paralaxe", "Fluxo e luminosidade", "Magnitudes", "Velas-padrão"],
   "fases": 7,
   "duracaoMinutos": 60,

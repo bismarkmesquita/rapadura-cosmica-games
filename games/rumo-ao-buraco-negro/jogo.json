@@ -3,7 +3,6 @@
   "titulo": "Rumo ao Buraco Negro",
   "resumo": "Pilote uma nave de Kepler até um buraco negro, passando por Newton e Einstein.",
   "aula": "Buracos negros",
-  "turmas": ["EF1", "EF2"],
   "temas": ["Leis de Kepler", "Gravitação universal", "Relatividade geral", "Buracos negros"],
   "fases": 5,
   "duracaoMinutos": 30,

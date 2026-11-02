@@ -20,7 +20,6 @@ export const AVANCADO = {
   bloco: 'Avançado',
   ligado: 'Modo Avançado ligado: fórmulas e números exatos',
   desligado: 'Modo Avançado desligado',
-  desafio: 'Avançado · opcional',
 };
 
 export const BOTOES = {

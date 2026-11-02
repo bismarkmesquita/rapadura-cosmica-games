@@ -72,7 +72,7 @@ export const intro: CardDef = {
     '<p>O tamanho que vemos no céu não é o tamanho real das coisas: é um <b>ângulo</b>. Ele depende do tamanho do objeto e da distância até ele.</p>' +
     '<p>O Sol é cerca de <b>400 vezes maior</b> que a Lua, mas também está cerca de <b>400 vezes mais longe</b>. Por isso os dois ocupam quase o mesmo ângulo no céu: meio grau.</p>' +
     '<p>Aproxime e afaste a Lua e veja, na janela de cima, o céu visto pelo olho.</p>',
-  ef2:
+  avancado:
     '<p>Para ângulos pequenos, o ângulo em segundos de arco é:</p>' +
     M.bloco(M.v('θ') + M.o('[″]') + M.o('≈') + M.n('206 265') + M.o('·') + M.fr(M.v('D'), M.v('d'))) +
     '<p>D é o diâmetro e d a distância, na mesma unidade. 206 265 é o número de segundos de arco num radiano.</p>',
@@ -91,7 +91,7 @@ export const fim: CardDef = {
     `<p>A Lua cobre o Sol porque os dois ocupam o mesmo ângulo no céu. Uma moeda a uns ${fmt(moedaCobreSolM, 0)} metros também cobre!</p>` +
     '<p>A distância da Lua muda um pouco ao longo do mês. Por isso, às vezes ela cobre o Sol inteiro (eclipse total) e às vezes sobra um anel de fogo (eclipse anular).</p>' +
     '<p>Ângulo, tamanho e distância andam juntos: sabendo dois, dá para descobrir o terceiro. É a primeira régua para medir o Universo.</p>',
-  ef2:
+  avancado:
     `<p>A Lua ocupa de ${fmt(grausLua(LUA.apogeuKm), 2)}° (mais longe) a ${fmt(grausLua(LUA.perigeuKm), 2)}° (mais perto). ` +
     `O Sol ocupa cerca de ${fmt(radianosParaGraus(diametroAngular(SOL.diametroKm, UA_KM)), 2)}°. ` +
     'Na distância média, a Lua é um pouquinho menor que o Sol no céu: por isso os eclipses anulares são mais comuns que os totais.</p>',

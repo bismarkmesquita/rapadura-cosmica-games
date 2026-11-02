@@ -42,7 +42,7 @@ export const estrelas: CardDef = {
   corpo:
     '<p>Essas estrelas giram em volta de um ponto onde não se vê nada. Uma delas, a <b>S2</b>, dá uma volta a cada 16 anos e, no ponto mais próximo, passa a mais de 7 mil km/s.</p>' +
     '<p>Acompanhando essas órbitas durante décadas, astrônomos calcularam a massa escondida no centro: uns 4 milhões de sóis num espaço menor que o Sistema Solar. Só um buraco negro explica isso. A descoberta deu o Prêmio Nobel de Física de 2020 a Reinhard Genzel e Andrea Ghez.</p>',
-  ef2:
+  avancado:
     '<p>É a 3ª lei de Kepler, na forma de Newton, usada para pesar o buraco negro:</p>' +
     M.bloco(
       M.v('M') +
@@ -58,7 +58,7 @@ export const disco: CardDef = {
   corpo:
     '<p>O buraco negro não brilha. O que brilha é o gás em volta dele: girando muito rápido num disco, ele se esfrega e esquenta até milhões de graus.</p>' +
     '<p>A luz desse gás faz curva em volta do buraco negro, e o centro aparece como uma sombra escura. Foi assim que o Event Horizon Telescope fotografou o buraco negro M87*, em 2019, e o próprio Sagitário A*, em 2022.</p>',
-  ef2:
+  avancado:
     '<p>O tamanho do horizonte de Sagitário A* sai da fórmula de Schwarzschild. Tente a conta no painel; é opcional.</p>' +
     M.bloco(raioS),
 };
@@ -71,7 +71,7 @@ export const perto: CardDef = {
     '<p>Olhe o painel: aqui, cada segundo seu já vale 1,4 segundo para quem está longe. Quanto mais perto do horizonte, maior a diferença.</p>' +
     '<p>A gravidade na frente da nave é mais forte que na traseira, e ela começa a esticar. Os cientistas chamam isso, de verdade, de <b>espaguetificação</b>. Num buraco negro do tamanho de uma estrela, isso seria fatal bem antes do horizonte; num gigante como Sagitário A*, só bem mais perto do centro. Aqui, o efeito está exagerado.</p>' +
     '<p>A velocidade de escape já passa de 70% da velocidade da luz. No horizonte, ela chega à própria velocidade da luz.</p>',
-  ef2:
+  avancado:
     M.bloco(
       M.fr(M.ind(M.v('Δt'), M.t('nave')), M.ind(M.v('Δt'), M.t('longe'))) +
         M.o('=') +

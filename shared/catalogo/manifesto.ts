@@ -2,8 +2,6 @@
  * Ficha de um jogo (games/<pasta>/jogo.json). O portal lê estas fichas para montar o menu,
  * então um jogo novo aparece no site só por ter a pasta com jogo.json e index.html.
  */
-export type Turma = 'EF1' | 'EF2' | 'EM';
-
 export type StatusJogo = 'rascunho' | 'beta' | 'publicado';
 
 export interface ManifestoJogo {
@@ -14,7 +12,6 @@ export interface ManifestoJogo {
   resumo: string;
   /** Tema da aula em que o jogo é usado. */
   aula: string;
-  turmas: Turma[];
   temas: string[];
   fases: number;
   /** Tempo aproximado para jogar tudo. */
@@ -28,7 +25,6 @@ export interface ManifestoJogo {
   atualizadoEm: string;
 }
 
-const TURMAS: Turma[] = ['EF1', 'EF2', 'EM'];
 const STATUS: StatusJogo[] = ['rascunho', 'beta', 'publicado'];
 
 /** Lista os problemas de uma ficha. Vazia quando está tudo certo. */
@@ -41,8 +37,6 @@ export function validaManifesto(m: Partial<ManifestoJogo>, pasta: string): strin
   if (m.slug !== pasta) erros.push(`slug "${m.slug}" deve ser igual ao nome da pasta "${pasta}"`);
   if (m.slug && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(m.slug))
     erros.push('slug deve usar só minúsculas, números e hífens');
-  if (!Array.isArray(m.turmas) || !m.turmas.length || m.turmas.some((t) => !TURMAS.includes(t)))
-    erros.push(`turmas deve ter ao menos uma entre ${TURMAS.join(', ')}`);
   if (!Array.isArray(m.temas) || !m.temas.length) erros.push('temas deve ter ao menos um tema');
   if (!Array.isArray(m.tecnologias)) erros.push('tecnologias deve ser uma lista');
   if (!Number.isInteger(m.fases) || (m.fases ?? 0) < 1) erros.push('fases deve ser um inteiro positivo');

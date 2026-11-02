@@ -34,8 +34,8 @@ export class PainelAcao {
   }
 
   /**
-   * Desafio de cálculo opcional (EF2). Sempre tem "Pular desafio",
-   * para a aula do EF1 seguir sem a conta.
+   * Desafio de cálculo do modo Avançado, sempre opcional: tem "Pular desafio",
+   * para a aula seguir sem a conta.
    */
   calculo(op: {
     eyebrow?: string;
@@ -49,7 +49,7 @@ export class PainelAcao {
     aoTerminar?: () => void;
   }): void {
     this.mostra(
-      op.eyebrow ?? 'Desafio EF2 · opcional',
+      op.eyebrow ?? 'Avançado · opcional',
       op.titulo,
       `<p>${op.texto}</p><div style="margin:2px 0 8px">${op.formula}</div>` +
         `<label>Resposta: <input data-in inputmode="decimal" placeholder="${op.unidade}"> ${op.unidade}</label>` +

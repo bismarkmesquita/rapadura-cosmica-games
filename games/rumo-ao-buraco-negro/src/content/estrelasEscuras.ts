@@ -8,7 +8,7 @@ export const NOME_FASE = 'Fase 4 · Estrelas escuras';
 export const MISSOES = {
   chegar: 'Aproxime-se da estrela gigante azul',
   colapso: porDispositivo('Clique em "Ver o fim da estrela"', 'Toque em "Ver o fim da estrela"'),
-  calculo: 'Desafio EF2 (opcional): o raio de Schwarzschild do Sol',
+  calculo: 'Avançado (opcional): o raio de Schwarzschild do Sol',
 };
 
 export const TECLAS: [string, string][] = [
@@ -40,7 +40,7 @@ export const michell: CardDef = {
   corpo:
     '<p>Em 1783, o inglês John Michell fez uma pergunta ousada: se uma bola jogada para cima volta ao chão, e se a luz também fosse puxada pela gravidade? Uma estrela com massa suficiente, num tamanho pequeno o bastante, teria velocidade de escape maior que a da luz.</p>' +
     '<p>Ela seria invisível: uma <b>estrela escura</b>. Anos depois, o francês Pierre-Simon Laplace teve a mesma ideia. Por mais de um século, isso foi só especulação.</p>',
-  ef2:
+  avancado:
     '<p>Michell usou a física de Newton, igualando a velocidade de escape à velocidade da luz:</p>' +
     M.bloco(
       M.v('c') +
@@ -64,7 +64,7 @@ export const schwarzschild: CardDef = {
     '<p>Quando uma estrela muito grande gasta o combustível, ela explode como <b>supernova</b>. O que sobra no centro desaba sobre si mesmo e fica tão compacto que a curva do espaço-tempo vira um poço sem fundo.</p>' +
     '<p>Em 1916, poucos meses depois da teoria de Einstein, o alemão Karl Schwarzschild resolveu as equações para uma massa concentrada num ponto e encontrou um raio especial: quem passa dele não volta mais. Hoje esse raio se chama <b>raio de Schwarzschild</b>, e a fronteira, <b>horizonte de eventos</b>.</p>' +
     '<p>Repare na grade: longe do centro, ela continua igual. A massa é a mesma; só ficou muito mais concentrada.</p>',
-  ef2:
+  avancado:
     M.bloco(raioS) +
     '<p>Para o Sol, R<sub>S</sub> ≈ 3 km. Para a Terra, menos de 1 cm. O desafio está no painel.</p>',
 };

@@ -3,7 +3,7 @@ import { validaManifesto } from './manifesto';
 
 describe('validaManifesto', () => {
   it('aponta os erros de uma ficha incompleta', () => {
-    const erros = validaManifesto({ slug: 'Jogo Novo', turmas: [] }, 'jogo-novo');
+    const erros = validaManifesto({ slug: 'Jogo Novo', fases: 0 }, 'jogo-novo');
     expect(erros.length).toBeGreaterThan(3);
   });
 });

@@ -1,5 +1,5 @@
 import type { CardDef } from '@shared/ui/cards';
-import { AVANCADO, BOTOES } from '../content/jogo';
+import { BOTOES } from '../content/jogo';
 import { estado } from '../core/estado';
 import { fluxo } from '../core/flow';
 import { acao, cards, conquistaRegua } from '../core/ui';
@@ -45,8 +45,7 @@ export function terminaFase(id: number, fim: CardDef, desafio?: DesafioDef): voi
     botao: proxima ? BOTOES.proxima(id + 1) : BOTOES.menu,
     aoFechar: () => (proxima ? fluxo.iniciaFase(id + 1) : fluxo.vaiMenu()),
   };
-  if (estado.avancado && desafio)
-    acao.calculo({ eyebrow: AVANCADO.desafio, ...desafio, aoTerminar: () => cards.enfileira(card) });
+  if (estado.avancado && desafio) acao.calculo({ ...desafio, aoTerminar: () => cards.enfileira(card) });
   else cards.enfileira(card);
 }
 

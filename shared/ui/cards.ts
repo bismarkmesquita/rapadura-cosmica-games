@@ -5,10 +5,10 @@ export interface CardDef {
   /** Linha pequena acima do título (ex.: "Kepler · 1609 · 1ª lei"). */
   eyebrow?: string;
   titulo: string;
-  /** HTML do texto principal, para todas as turmas. */
+  /** HTML do texto principal, para todos os alunos (sem contas). */
   corpo: string;
-  /** HTML do aprofundamento opcional para o EF2 (fórmulas), mostrado recolhido. */
-  ef2?: string;
+  /** HTML do bloco Avançado (fórmulas e números exatos), opcional. */
+  avancado?: string;
   /** Nome da ilustração animada no catálogo do jogo. */
   ilus?: string;
   /** Dica curta ao lado do botão. */
@@ -19,8 +19,11 @@ export interface CardDef {
   aoFechar?: (() => void) | null;
 }
 
-/** Como aparece o bloco `ef2`. Um jogo com modo Avançado mostra o bloco aberto, e só com o modo ligado. */
-export interface OpcoesAprofundar {
+/**
+ * Como aparece o bloco Avançado. Por padrão ele fica recolhido em todo card; um jogo com o botão global de modo
+ * Avançado mostra o bloco aberto, e só com o modo ligado.
+ */
+export interface OpcoesAvancado {
   rotulo: string;
   visivel: () => boolean;
   aberto?: boolean;
@@ -37,7 +40,7 @@ export class Cards {
     private el: HTMLElement,
     private catalogo: CatalogoIlustracoes,
     private aoAbrir: () => void = () => {},
-    private aprofundar: OpcoesAprofundar = { rotulo: 'Aprofundar (EF2)', visivel: () => true },
+    private opcoesAvancado: OpcoesAvancado = { rotulo: 'Avançado', visivel: () => true },
   ) {
     el.classList.add('card--slide');
   }
@@ -79,13 +82,13 @@ export class Cards {
     }
     if (!c.revisao) this.ultimo = c;
     const il = c.ilus ? this.catalogo[c.ilus] : undefined;
-    const ap = this.aprofundar;
+    const ap = this.opcoesAvancado;
     this.el.classList.toggle('com-ilus', !!il);
     this.el.innerHTML =
       `<div class="eyebrow">${c.eyebrow ?? ''}</div><h2>${c.titulo}</h2>` +
       `<div class="grade"><div class="texto">${c.corpo}` +
-      (c.ef2 && ap.visivel()
-        ? `<details class="ef2"${ap.aberto ? ' open' : ''}><summary>${ap.rotulo}</summary><div>${c.ef2}</div></details>`
+      (c.avancado && ap.visivel()
+        ? `<details class="avancado"${ap.aberto ? ' open' : ''}><summary>${ap.rotulo}</summary><div>${c.avancado}</div></details>`
         : '') +
       `</div>` +
       (il ? `<figure><canvas aria-hidden="true"></canvas><figcaption>${il.leg}</figcaption></figure>` : '') +
