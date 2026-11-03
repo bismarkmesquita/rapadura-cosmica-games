@@ -93,13 +93,25 @@ export const HUD = {
 
 const sct = ARRANJOS.sct;
 
+export const historia: CardDef = {
+  eyebrow: 'Oficina · 1609 a 1668',
+  ilus: 'historiaOptica',
+  titulo: 'De Galileu a Newton',
+  corpo:
+    '<p><b>Galileu, 1609.</b> Uma lente convexa na frente e uma côncava na ocular, antes do foco. A imagem fica direita, mas o campo de visão é pequeno.</p>' +
+    '<p><b>Kepler, 1611.</b> A ocular vira uma lente convexa, depois do foco. A imagem fica invertida, e o campo, bem maior. É o refrator desta oficina.</p>' +
+    '<p><b>Newton, 1668.</b> As lentes criavam bordas coloridas. Ele trocou a objetiva por um espelho curvo e, com um espelho pequeno a 45°, levou o foco para a lateral do tubo.</p>',
+  avancado:
+    '<p>Em 1672, o arranjo atribuído a Laurent Cassegrain troca o espelho a 45° por um secundário convexo, que devolve a luz por um furo no primário. Em 1931, Bernhard Schmidt cria a placa corretora, a lente fina do Schmidt-Cassegrain.</p>',
+};
+
 export const intro: CardDef = {
-  eyebrow: 'Oficina · Newton · 1668',
+  eyebrow: 'Oficina · Arranjos ópticos',
   ilus: 'arranjos',
   titulo: 'Lente ou espelho?',
   corpo:
     '<p>A peça principal de um telescópio é a que junta a luz: a <b>objetiva</b>. Ela pode ser uma <b>lente</b> (refrator) ou um <b>espelho</b> curvo (refletor).</p>' +
-    '<p>As lentes desviam cada cor de um jeito e criam bordas coloridas. Em 1668, Isaac Newton resolveu isso trocando a lente por um espelho. Depois vieram arranjos que dobram o caminho da luz para encurtar o tubo.</p>' +
+    '<p>Lentes desviam cada cor de um jeito; espelhos, não. Depois de Newton, vieram arranjos que dobram o caminho da luz para encurtar o tubo.</p>' +
     '<p>Monte cada arranjo e faça a luz chegar na ocular.</p>',
   avancado:
     '<p>Nos arranjos Cassegrain, o espelho secundário convexo devolve a luz e alonga a distância focal: o tubo fica curto, mas o telescópio se comporta como um muito mais longo.</p>',

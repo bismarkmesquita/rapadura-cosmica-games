@@ -233,6 +233,17 @@ body,
   color: var(--muted);
   font-size: 15px;
 }
+/*
+ * Slides mais altos que a tela (com o Avançado aberto): centralizado, o começo do card sumia acima do topo sem
+ * dar para rolar até lá. Com margem automática, o card fica no meio quando cabe e começa no topo quando não cabe.
+ */
+.camada {
+  place-items: start center;
+}
+.camada > .card {
+  margin-block: auto;
+}
+
 .acoes--inicio {
   justify-content: flex-start !important;
 }

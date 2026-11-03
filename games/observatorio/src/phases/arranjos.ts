@@ -24,8 +24,8 @@ import * as T from '../content/arranjos';
 
 const ARRANJOS = Object.keys(T.ARRANJOS) as Arranjo[];
 const TIPOS = Object.keys(T.ROTULOS.tipo) as TipoEspelho[];
-/** Fração do caminho que cada fóton anda por segundo. */
-const VELOCIDADE_LUZ = 0.18;
+/** Unidades da cena que os fótons andam por segundo. */
+const VELOCIDADE_LUZ = 4;
 /** Pixels que o dedo pode andar e ainda contar como toque (e não como giro). */
 const TOQUE_PX = 6;
 /** Começo do newtoniano: o espelho pequeno torto, para o aluno acertar. */
@@ -76,6 +76,7 @@ export class FaseArranjos implements Fase {
       this.cena = { scene, camera: new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 200) };
     } else toast.mostra(SEM_3D, 8);
     this.remonta();
+    cards.enfileira(T.historia);
     cards.enfileira(T.intro);
   }
 
@@ -95,6 +96,8 @@ export class FaseArranjos implements Fase {
   private remonta(controlesTambem = true): void {
     this.tracado = this.traca();
     if (this.cena) {
+      // A leva continua de onde estava: mexer na barra não faz os fótons voltarem ao começo.
+      const leva = this.modelo?.leva ?? 0;
       if (this.modelo) {
         this.cena.scene.remove(this.modelo.grupo);
         descarta(this.modelo.grupo);
@@ -105,6 +108,7 @@ export class FaseArranjos implements Fase {
         posicao: this.posicao,
       });
       tuboTransparente(this.modelo, this.transparente);
+      andaFotons(this.modelo, leva);
       this.cena.scene.add(this.modelo.grupo);
     }
     if (controlesTambem) this.montaControles();
