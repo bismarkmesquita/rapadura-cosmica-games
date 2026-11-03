@@ -28,6 +28,17 @@ export const magnitudeLimite = (Dmm: number, pupilaMm = PUPILA_MM): number =>
 export const resolucaoRayleigh = (Dmm: number, lambdaNm = LAMBDA_VISIVEL_NM): number =>
   ((1.22 * lambdaNm * 1e-9) / (Dmm * 1e-3)) * SEGUNDOS_POR_RADIANO;
 
+/**
+ * Tamanho da imagem de uma estrela (″) somando a difração e o seeing da atmosfera. Somar em quadratura é a
+ * aproximação usual quando os dois borrões têm forma parecida.
+ */
+export const tamanhoDaImagem = (Dmm: number, seeingSeg: number, lambdaNm = LAMBDA_VISIVEL_NM): number =>
+  Math.hypot(resolucaoRayleigh(Dmm, lambdaNm), seeingSeg);
+
+/** Abertura (mm) a partir da qual o seeing passa a mandar: a difração fica menor que ele. */
+export const aberturaOndeSeeingManda = (seeingSeg: number, lambdaNm = LAMBDA_VISIVEL_NM): number =>
+  ((1.22 * lambdaNm * 1e-9 * SEGUNDOS_POR_RADIANO) / seeingSeg) * 1e3;
+
 /** Escala de placa: segundos de arco do céu em cada milímetro do sensor. */
 export const escalaDePlaca = (Fmm: number): number => SEGUNDOS_POR_RADIANO / Fmm;
 

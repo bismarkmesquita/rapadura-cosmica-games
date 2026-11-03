@@ -2,7 +2,7 @@
 import type { Ilustracao } from '@shared/ui/illustration';
 import { COR, rotulo } from '@shared/draw/helpers';
 import { TAU } from '@shared/math/format';
-import { saturno } from '../scene/desenho';
+import { estrelaBorrada, saturno } from '../scene/desenho';
 
 /** Saturno com 40×, 100× e 400×: tamanhos na proporção dos aumentos; o último, escuro e borrado. */
 export const aumentos: Ilustracao = {
@@ -70,5 +70,60 @@ export const baldes: Ilustracao = {
       c.stroke();
       rotulo(c, nome, x, h - 8, COR.ink, 'center', 12);
     }
+  },
+};
+
+/** Duas estrelas se aproximando até virarem uma mancha só. */
+export const dupla: Ilustracao = {
+  leg: 'Cada estrela vira um pequeno disco. Quando os discos se misturam, a dupla parece uma estrela só.',
+  draw(c, w, h, t) {
+    // Vai e volta em 6 s: da dupla bem separada até a mancha única.
+    const k = 0.5 - 0.5 * Math.cos((t / 6) * TAU);
+    const sep = w * (0.3 - 0.24 * k);
+    const raio = w * 0.09;
+    for (const lado of [-1, 1]) estrelaBorrada(c, w / 2 + (lado * sep) / 2, h * 0.45, raio);
+    rotulo(
+      c,
+      sep > raio ? 'duas estrelas' : 'parece uma só',
+      w / 2,
+      h * 0.8,
+      sep > raio ? COR.ok : COR.ink,
+      'center',
+      13,
+    );
+  },
+};
+
+/** Um raio de luz atravessa camadas de ar em movimento e chega torto. */
+export const ar: Ilustracao = {
+  leg: 'Cada camada de ar desvia um pouquinho a luz, e o desvio muda o tempo todo: a estrela dança.',
+  draw(c, w, h, t) {
+    const camadas = 5;
+    for (let i = 0; i < camadas; i++) {
+      const y = h * (0.2 + (0.6 * i) / (camadas - 1));
+      c.strokeStyle = 'rgba(115,210,255,.3)';
+      c.lineWidth = 1.5;
+      c.beginPath();
+      for (let k = 0; k <= 30; k++) {
+        const x = (k / 30) * w;
+        const yy = y + Math.sin(k * 0.6 + t * 2 + i) * 4;
+        if (k) c.lineTo(x, yy);
+        else c.moveTo(x, yy);
+      }
+      c.stroke();
+    }
+    c.strokeStyle = COR.sol;
+    c.lineWidth = 2.5;
+    c.beginPath();
+    let x = w / 2;
+    c.moveTo(x, h * 0.06);
+    for (let i = 0; i < camadas; i++) {
+      x += Math.sin(t * 3.1 + i * 1.7) * w * 0.03;
+      c.lineTo(x, h * (0.2 + (0.6 * i) / (camadas - 1)));
+    }
+    c.lineTo(x, h * 0.9);
+    c.stroke();
+    estrelaBorrada(c, w / 2, h * 0.06, 6);
+    rotulo(c, 'telescópio', x, h - 4, COR.ink, 'center', 12);
   },
 };

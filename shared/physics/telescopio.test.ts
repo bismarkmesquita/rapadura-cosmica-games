@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  aberturaOndeSeeingManda,
   anguloEixoPolar,
   aumento,
   aumentoMaximoUtil,
@@ -9,6 +10,7 @@ import {
   pupilaDeSaida,
   razaoFocal,
   resolucaoRayleigh,
+  tamanhoDaImagem,
 } from './telescopio';
 
 // Telescópio de referência da aula: D = 200 mm, F = 1 000 mm, oculares de 25 mm e 10 mm.
@@ -38,5 +40,17 @@ describe('montagem equatorial', () => {
   it('o eixo polar sobe tanto quanto a latitude: quase deitado em Fortaleza, em pé no Polo Norte', () => {
     expect(anguloEixoPolar(-3.7)).toBeCloseTo(3.7, 10);
     expect(anguloEixoPolar(90)).toBe(90);
+  });
+});
+
+describe('atmosfera', () => {
+  it('sem ar, sobra só a difração; com 1″ de seeing, a imagem de 200 mm passa de 1″', () => {
+    expect(tamanhoDaImagem(200, 0)).toBeCloseTo(resolucaoRayleigh(200), 10);
+    expect(tamanhoDaImagem(200, 1)).toBeCloseTo(1.22, 2);
+  });
+
+  it('com seeing de 1″, acima de uns 14 cm de abertura quem manda é a atmosfera', () => {
+    expect(aberturaOndeSeeingManda(1)).toBeCloseTo(138, 0);
+    expect(resolucaoRayleigh(aberturaOndeSeeingManda(1))).toBeCloseTo(1, 10);
   });
 });
