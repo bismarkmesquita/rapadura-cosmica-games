@@ -1,4 +1,5 @@
 import type { CardDef } from '@shared/ui/cards';
+import { fimDeFase } from '@shared/ui/fimDeFase';
 import { BOTOES } from '../content/jogo';
 import { estado } from '../core/estado';
 import { fluxo } from '../core/flow';
@@ -34,8 +35,8 @@ export interface DesafioDef {
 }
 
 /**
- * Fecha a fase: marca como concluída, mostra o desafio de conta (só no modo Avançado, e sempre opcional) e o card
- * final, que leva à fase seguinte.
+ * Fecha a fase: marca como concluída, mostra o desafio de conta (só no modo Avançado, e sempre opcional) e o botão
+ * de avançar. A cena continua na tela até o aluno pedir o card final, que leva à fase seguinte.
  */
 export function terminaFase(id: number, fim: CardDef, desafio?: DesafioDef): void {
   concluiFase(id);
@@ -45,8 +46,9 @@ export function terminaFase(id: number, fim: CardDef, desafio?: DesafioDef): voi
     botao: proxima ? BOTOES.proxima(id + 1) : BOTOES.menu,
     aoFechar: () => (proxima ? fluxo.iniciaFase(id + 1) : fluxo.vaiMenu()),
   };
-  if (estado.avancado && desafio) acao.calculo({ ...desafio, aoTerminar: () => cards.enfileira(card) });
-  else cards.enfileira(card);
+  const avancar = (): void => fimDeFase(acao, cards, card);
+  if (estado.avancado && desafio) acao.calculo({ ...desafio, aoTerminar: avancar });
+  else avancar();
 }
 
 /** O ponto (px, py) está a até r de (x, y). */
