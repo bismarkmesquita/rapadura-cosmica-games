@@ -127,3 +127,42 @@ export const ar: Ilustracao = {
     rotulo(c, 'telescópio', x, h - 4, COR.ink, 'center', 12);
   },
 };
+
+/** Os três alvos da missão final, ganhando o ✓ um por um. */
+export const missao: Ilustracao = {
+  leg: 'Saturno, uma galáxia fraca e uma estrela dupla: cada um pede uma coisa diferente do telescópio.',
+  draw(c, w, h, t) {
+    const r = Math.min(w * 0.13, h * 0.2);
+    const y = h * 0.42;
+    const feitos = Math.floor(t / 0.9) % 5;
+    ['Saturno', 'galáxia', 'dupla'].forEach((nome, i) => {
+      const x = w * (0.2 + 0.3 * i);
+      c.fillStyle = '#05060f';
+      c.beginPath();
+      c.arc(x, y, r, 0, TAU);
+      c.fill();
+      c.strokeStyle = i < feitos ? COR.ok : COR.muted;
+      c.lineWidth = i < feitos ? 3 : 1.5;
+      c.stroke();
+      if (i === 0) saturno(c, x, y, r * 0.2, -0.25);
+      else if (i === 1) {
+        const g = c.createRadialGradient(x, y, 0, x, y, r * 0.5);
+        g.addColorStop(0, 'rgba(255,236,200,.7)');
+        g.addColorStop(1, 'rgba(255,236,200,0)');
+        c.fillStyle = g;
+        c.beginPath();
+        c.ellipse(x, y, r * 0.5, r * 0.22, -0.5, 0, TAU);
+        c.fill();
+      } else for (const lado of [-1, 1]) estrelaBorrada(c, x + lado * r * 0.25, y, r * 0.25);
+      rotulo(
+        c,
+        `${i < feitos ? '✓ ' : ''}${nome}`,
+        x,
+        y + r + 18,
+        i < feitos ? COR.ok : COR.ink,
+        'center',
+        12,
+      );
+    });
+  },
+};

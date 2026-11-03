@@ -97,6 +97,10 @@ body,
   min-width: 60px;
   accent-color: var(--sol);
 }
+/* Fase com muitos botões (missão final): a caixa usa a largura da tela, para caber em menos linhas. */
+#controles:has(.largo) {
+  width: min(860px, calc(100vw - 28px));
+}
 #controles .nota {
   flex: 1 1 100%;
   margin: 0;

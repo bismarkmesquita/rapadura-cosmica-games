@@ -5,6 +5,7 @@ import { FaseAmpliacao } from './ampliacao';
 import { FaseMagLimite } from './magLimite';
 import { FaseResolucao } from './resolucao';
 import { FaseAtmosfera } from './atmosfera';
+import { FaseMissao } from './missao';
 
 /** Fases prontas (a 7 é a missão final). Para acrescentar uma, crie a classe e registre aqui; o menu sai de content/jogo.ts. */
 export const FASES: Record<number, Fase> = {
@@ -14,4 +15,5 @@ export const FASES: Record<number, Fase> = {
   4: new FaseMagLimite(),
   5: new FaseResolucao(),
   6: new FaseAtmosfera(),
+  7: new FaseMissao(),
 };
