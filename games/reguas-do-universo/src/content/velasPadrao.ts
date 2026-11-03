@@ -5,6 +5,7 @@
 import type { CardDef } from '@shared/ui/cards';
 import { porDispositivo } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { distanciaPorModulo, magnitudeAparente, magnitudeCefeida } from '@shared/physics/distancias';
 
@@ -79,15 +80,10 @@ export const intro: CardDef = {
     '<p><b>Henrietta Leavitt</b> descobriu que as Cefeidas pulsam num ritmo ligado ao brilho real: <b>quanto mais devagar piscam, mais potentes são</b>. Hubble usou isso para mostrar que Andrômeda fica fora da Via Láctea.</p>' +
     '<p>Meça o ritmo das Cefeidas de duas galáxias e descubra qual está mais longe.</p>',
   avancado:
+    '<p>A relação período–luminosidade das Cefeidas usada no jogo (P em dias):</p>' +
+    FORMULAS.cefeida +
     '<p>Com M lida no gráfico e m medida, o módulo de distância invertido dá a distância em parsecs:</p>' +
-    M.bloco(
-      M.v('d') +
-        M.o('=') +
-        M.pot(
-          M.n(10),
-          M.o('(') + M.v('m') + M.o('−') + M.v('M') + M.o('+') + M.n(5) + M.o(')') + M.o('/') + M.n(5),
-        ),
-    ),
+    FORMULAS.distancia,
   dica: porDispositivo(
     'Clique no cronômetro quando a estrela estiver no brilho máximo',
     'Toque no cronômetro quando a estrela estiver no brilho máximo',

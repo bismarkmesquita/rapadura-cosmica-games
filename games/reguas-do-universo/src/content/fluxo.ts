@@ -4,6 +4,7 @@
  */
 import type { CardDef } from '@shared/ui/cards';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { fluxo } from '@shared/physics/distancias';
 import { LUMINOSIDADE_SOL_W, UA_KM } from '@shared/physics/constantes';
@@ -66,8 +67,11 @@ export const intro: CardDef = {
     '<p>A luz se espalha ao se afastar. No dobro da distância, a mesma luz cobre uma área 4 vezes maior, então fica <b>4 vezes mais fraca</b>.</p>' +
     '<p>Aproxime e afaste as duas lâmpadas e veja o medidor.</p>',
   avancado:
-    '<p>A luz se espalha numa esfera de área 4πd². O fluxo é a luminosidade dividida por essa área:</p>' +
-    M.bloco(M.v('F') + M.o('=') + M.fr(M.v('L'), M.n(4) + M.v('π') + M.pot(M.v('d'), M.n(2)))) +
+    '<p>A luminosidade depende do tamanho e da temperatura da estrela (lei de Stefan–Boltzmann):</p>' +
+    FORMULAS.luminosidade +
+    '<p>R é o raio, T a temperatura da superfície e σ = 5,67 × 10⁻⁸ W/(m²·K⁴). Com o raio e a temperatura do Sol, dá 3,83 × 10²⁶ W.</p>' +
+    '<p>Longe da estrela, a luz se espalha numa esfera de área 4πd². O fluxo é a luminosidade dividida por essa área:</p>' +
+    FORMULAS.fluxo +
     '<p>F em W/m², L em watts e d em metros.</p>',
   dica: 'Arraste as lâmpadas ou use as barras embaixo',
   botao: 'Começar',

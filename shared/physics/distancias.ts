@@ -2,7 +2,7 @@
  * Réguas da astronomia: ângulos, paralaxe, fluxo e magnitudes. Unidades da própria astronomia (segundos de
  * arco, parsecs, magnitudes), como nas provas de olimpíada.
  */
-import { MAG_BOL_SOL, SOL } from './constantes';
+import { MAG_BOL_SOL, SOL, STEFAN_BOLTZMANN } from './constantes';
 
 /** Segundos de arco num radiano. É também o número de UA num parsec. */
 export const SEGUNDOS_POR_RADIANO = 206_264.806;
@@ -19,6 +19,10 @@ export const diametroPorAngulo = (thetaSeg: number, d: number): number =>
 
 /** Distância em parsecs para uma paralaxe em segundos de arco. */
 export const distanciaPorParalaxe = (pSeg: number): number => 1 / pSeg;
+
+/** Luminosidade (W) de uma estrela de raio R (m) e temperatura da superfície T (K): Stefan–Boltzmann. */
+export const luminosidadeEstelar = (R: number, T: number): number =>
+  4 * Math.PI * R * R * STEFAN_BOLTZMANN * T ** 4;
 
 /** Fluxo, em W/m², a uma distância d (m) de uma fonte de luminosidade L (W). */
 export const fluxo = (L: number, d: number): number => L / (4 * Math.PI * d * d);

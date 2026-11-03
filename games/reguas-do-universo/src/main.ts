@@ -23,6 +23,7 @@ import {
 } from './core/ui';
 import { FASES } from './phases';
 import { AVANCADO, BOTOES, EM_BREVE, ESCADA_MENU, FASES_MENU, TELA_CHEIA } from './content/jogo';
+import { FORMULARIO } from './content/formulario';
 
 let faseEscolhida = 1;
 
@@ -84,6 +85,15 @@ function alternaPausa(): void {
   $('pausa').hidden = !estado.pausado;
 }
 
+/** Abre o Formulário por cima da fase, sem tomar o lugar do "último slide" que a tecla C revê. */
+function abreFormulario(): void {
+  if (cards.aberto) return;
+  if (estado.pausado) alternaPausa();
+  const ultimo = cards.ultimo;
+  cards.enfileira(FORMULARIO);
+  cards.ultimo = ultimo;
+}
+
 function alternaAvancado(): void {
   estado.avancado = !estado.avancado;
   atualizaBotaoAvancado();
@@ -125,6 +135,7 @@ function ligaMenus(): void {
   $('pContinuar').onclick = alternaPausa;
   $('pReiniciar').onclick = () => estado.fase && iniciaFase(estado.fase.id);
   $('pMenu').onclick = vaiMenu;
+  for (const id of ['btnFormulas', 'pFormulas']) $(id).onclick = abreFormulario;
   $('pCard').onclick = () => {
     alternaPausa();
     cards.revisa();

@@ -8,6 +8,7 @@ import {
   fluxo,
   fracaoAbaixo,
   fracoesDoEspectro,
+  luminosidadeEstelar,
   luminosidadePorMagBol,
   magBolPorLuminosidade,
   magnitudeAbsoluta,
@@ -38,6 +39,18 @@ describe('paralaxe', () => {
     const d = distanciaPorParalaxe(ESTRELAS.proxima.paralaxe);
     expect(d).toBeCloseTo(1.302, 3);
     expect(d * PARSEC_ANOS_LUZ).toBeCloseTo(4.25, 2);
+  });
+});
+
+describe('luminosidade', () => {
+  it('o Sol, com o raio e a temperatura dele, dá 3,83 × 10²⁶ W', () => {
+    expect(luminosidadeEstelar(SOL.raioM, SOL.temperaturaK) / LUMINOSIDADE_SOL_W).toBeCloseTo(1, 2);
+  });
+
+  it('o dobro do raio dá 4 vezes mais luz; o dobro da temperatura, 16 vezes', () => {
+    const base = luminosidadeEstelar(1, 1000);
+    expect(luminosidadeEstelar(2, 1000) / base).toBeCloseTo(4, 10);
+    expect(luminosidadeEstelar(1, 2000) / base).toBeCloseTo(16, 10);
   });
 });
 

@@ -4,6 +4,7 @@
  */
 import type { CardDef } from '@shared/ui/cards';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { ESTRELAS, LIMITE_OLHO_NU_MAG, LUA, SOL, VENUS_MAG } from '@shared/physics/constantes';
 import { razaoDeBrilho } from '@shared/physics/distancias';
@@ -68,20 +69,11 @@ export const intro: CardDef = {
     '<p>A escala ficou ao contrário do que esperamos: <b>número maior quer dizer mais fraca</b>. Hoje ela também tem números negativos, para os astros muito brilhantes.</p>' +
     '<p>Arraste cada astro do céu para o lugar dele na régua.</p>',
   avancado:
-    '<p>5 magnitudes valem um fator 100 no fluxo, e cada magnitude vale cerca de 2,5 vezes:</p>' +
-    M.bloco(
-      M.ind(M.v('m'), M.n(1)) +
-        M.o('−') +
-        M.ind(M.v('m'), M.n(2)) +
-        M.o('=') +
-        M.o('−') +
-        M.n('2,5') +
-        M.o('·') +
-        M.ind(M.t('log'), M.n(10)) +
-        M.o('(') +
-        M.fr(M.ind(M.v('F'), M.n(1)), M.ind(M.v('F'), M.n(2))) +
-        M.o(')'),
-    ),
+    '<p>A magnitude aparente é a régua do <b>fluxo</b>: 5 magnitudes valem um fator 100.</p>' +
+    FORMULAS.pogson +
+    '<p>Ou, ao contrário, a razão dos fluxos a partir das magnitudes:</p>' +
+    FORMULAS.razaoFluxos +
+    '<p>Cada magnitude vale 100^(1/5) ≈ 2,512 vezes no fluxo.</p>',
   dica: 'Repare no tamanho e no brilho de cada um',
   botao: 'Começar',
 };

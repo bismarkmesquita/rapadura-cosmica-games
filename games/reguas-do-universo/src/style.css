@@ -218,6 +218,40 @@ body,
   color: var(--muted);
   font-size: 15px;
 }
+/*
+ * Slides mais altos que a tela (com o Avançado aberto): centralizado, o começo do card sumia acima do topo sem
+ * dar para rolar até lá. Com margem automática, o card fica no meio quando cabe e começa no topo quando não cabe.
+ */
+.camada {
+  place-items: start center;
+}
+.camada > .card {
+  margin-block: auto;
+}
+
+/* Formulário: as fórmulas em grupos, em colunas; o card fica mais largo para caber na tela. */
+.card:has(.formulario) {
+  width: min(1040px, 100%);
+}
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 6px 28px;
+}
+.formulario h3 {
+  margin: 10px 0 0;
+  font-size: 15px;
+  color: var(--orbita);
+}
+.formulario math[display='block'] {
+  font-size: 1.1em;
+  margin: 6px 0;
+}
+.nota-formula {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
 .acoes--inicio {
   justify-content: flex-start !important;
 }

@@ -5,6 +5,7 @@
 import type { CardDef } from '@shared/ui/cards';
 import { porDispositivo } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { LUA, SOL, UA_KM } from '@shared/physics/constantes';
 import {
@@ -74,7 +75,7 @@ export const intro: CardDef = {
     '<p>Aproxime e afaste a Lua e veja, na janela de cima, o céu visto pelo olho.</p>',
   avancado:
     '<p>Para ângulos pequenos, o ângulo em segundos de arco é:</p>' +
-    M.bloco(M.v('θ') + M.o('[″]') + M.o('≈') + M.n('206 265') + M.o('·') + M.fr(M.v('D'), M.v('d'))) +
+    FORMULAS.angulo +
     '<p>D é o diâmetro e d a distância, na mesma unidade. 206 265 é o número de segundos de arco num radiano.</p>',
   dica: porDispositivo(
     'Arraste a Lua com o mouse ou use a barra embaixo',
