@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { LUZ } from '../core/engine';
 import { fmt } from '@shared/math/format';
 import { avanca, gravidadeCentral } from '@shared/physics/gravity';
+import { fimDeFase } from '@shared/ui/fimDeFase';
 import { linhaHud, medidorHud, tituloHud } from '@shared/ui/hud';
 import { COR } from '@shared/draw/helpers';
 import type { Fase } from '../types';
@@ -9,7 +10,7 @@ import { scene } from '../core/engine';
 import { nave, posicionaNave } from '../core/estado';
 import { iniciaCamera } from '../core/camera';
 import { controlaNave, moveNave, registraTrilha } from '../core/ship';
-import { cards, info, missoes, painel, teclasDaFase, toast, toqueDaFase } from '../core/ui';
+import { acao, cards, info, missoes, painel, teclasDaFase, toast, toqueDaFase } from '../core/ui';
 import { desenhaAlvo, rotulo3D } from '../core/overlay';
 import { fluxo } from '../core/flow';
 import { brilho } from '../scene/sprites';
@@ -266,8 +267,10 @@ export class FaseEinstein implements Fase {
     if (m?.id === 'tempo') {
       if (r < 210) this.tPerto += dt;
       if (this.tPerto >= 8 && missoes.conclui('tempo')) {
-        cards.enfileira(T.tempo);
-        cards.enfileira({ ...T.final, aoFechar: () => fluxo.iniciaFase(4) });
+        cards.enfileira({
+          ...T.tempo,
+          aoFechar: () => fimDeFase(acao, cards, { ...T.final, aoFechar: () => fluxo.iniciaFase(4) }),
+        });
       }
     }
   }

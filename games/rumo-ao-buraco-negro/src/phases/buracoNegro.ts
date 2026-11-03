@@ -136,7 +136,13 @@ export class FaseBuracoNegro implements Fase {
         this.cardsFinais = true;
         cards.enfileira({
           ...T.horizonte,
-          aoFechar: () => cards.enfileira({ ...T.resumo, aoFechar: () => fluxo.vaiMenu() }),
+          aoFechar: () =>
+            cards.enfileira({
+              ...T.resumo,
+              aoFechar: () => fluxo.vaiMenu(),
+              // A nave já passou do horizonte: não há como ficar na cena, só repetir a fase.
+              secundario: { rotulo: 'Repetir esta fase', aoClicar: () => fluxo.iniciaFase(this.id) },
+            }),
         });
       }
       return;

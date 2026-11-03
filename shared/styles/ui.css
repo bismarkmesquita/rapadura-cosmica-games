@@ -344,6 +344,21 @@ math[display='block'] {
   font-size: 14px;
   margin-top: 6px;
 }
+/* Fim de fase: só o botão, para caber ao lado da caixa de controles e não cobrir a cena. */
+.painel-acao.painel-acao--curto {
+  width: auto;
+}
+.painel-acao--curto .box {
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.painel-acao--curto .eyebrow,
+.painel-acao--curto h3 {
+  display: none;
+}
 
 /* Selo e links do canal */
 .selo-canal {
