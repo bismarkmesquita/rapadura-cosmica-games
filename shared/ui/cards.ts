@@ -116,7 +116,8 @@ export class Cards {
         // aoFechar pode ter aberto outro card (o resumo final, a introdução da fase seguinte): não fechar esse.
         if (!this.aberto) this.abreProximo();
       };
-      setTimeout(() => ok.focus(), 30);
+      // Sem rolar: num slide mais alto que a tela, o foco no botão levaria a vista para o fim e esconderia o título.
+      setTimeout(() => ok.focus({ preventScroll: true }), 30);
     }
   }
 }

@@ -4,6 +4,7 @@
  */
 import type { CardDef } from '@shared/ui/cards';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { ESTRELAS, MAG_BOL_SOL, SOL } from '@shared/physics/constantes';
 import {
@@ -111,21 +112,9 @@ export const intro: CardDef = {
     '<p>No visor estão Spica, o Sol e Betelgeuse, todas a 10 parsecs. Troque o filtro e veja o brilho de cada uma mudar.</p>',
   avancado:
     '<p>A correção bolométrica é a diferença entre as duas magnitudes. Ela é negativa ou perto de zero:</p>' +
-    M.bloco(M.v('BC') + M.o('=') + M.ind(M.v('M'), M.t('bol')) + M.o('−') + M.ind(M.v('M'), M.v('V'))) +
+    FORMULAS.correcao +
     `<p>A magnitude bolométrica dá a luminosidade (Sol: ${fmt(MAG_BOL_SOL, 2)}):</p>` +
-    M.bloco(
-      M.ind(M.v('M'), M.t('bol')) +
-        M.o('−') +
-        M.ind(M.v('M'), M.t('bol,☉')) +
-        M.o('=') +
-        M.o('−') +
-        M.n('2,5') +
-        M.o('·') +
-        M.ind(M.t('log'), M.n(10)) +
-        M.o('(') +
-        M.fr(M.v('L'), M.ind(M.v('L'), M.t('☉'))) +
-        M.o(')'),
-    ),
+    FORMULAS.bolometrica,
   dica: 'Os botões dos filtros ficam embaixo',
   botao: 'Começar',
 };

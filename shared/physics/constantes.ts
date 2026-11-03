@@ -7,10 +7,13 @@ export const UA_KM = 149_597_870.7;
 export const PARSEC_ANOS_LUZ = 3.2616;
 export const LUMINOSIDADE_SOL_W = 3.828e26;
 export const MAG_BOL_SOL = 4.74;
+/** Constante de Stefan–Boltzmann, em W/(m²·K⁴). */
+export const STEFAN_BOLTZMANN = 5.670374e-8;
 
 export const SOL = {
   diametroKm: 1_392_700,
   temperaturaK: 5772,
+  raioM: 6.957e8,
   magAparente: -26.74,
   magAbsoluta: 4.83,
   magBol: MAG_BOL_SOL,

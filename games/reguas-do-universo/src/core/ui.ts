@@ -51,6 +51,8 @@ export function atualizaBotaoAvancado(): void {
     b.setAttribute('aria-pressed', String(estado.avancado));
     b.classList.toggle('ligado', estado.avancado);
   }
+  // O Formulário é parte do Avançado: sem ele, nenhuma fórmula na tela.
+  for (const id of ['btnFormulas', 'pFormulas']) $(id).hidden = !estado.avancado;
 }
 
 export function atualizaVisibilidadeHud(): void {

@@ -4,6 +4,7 @@
  */
 import type { CardDef } from '@shared/ui/cards';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { ESTRELAS, SOL } from '@shared/physics/constantes';
 import { magnitudeAbsoluta, razaoDeBrilho, SEGUNDOS_POR_RADIANO } from '@shared/physics/distancias';
@@ -60,19 +61,12 @@ export const intro: CardDef = {
     `<p>O Sol, que domina o nosso céu, lá seria uma estrela fraquinha, de magnitude ${fmt(SOL.magAbsoluta, 1)}.</p>` +
     '<p>Faça uma previsão e depois leve cada estrela até a linha dos 10 parsecs.</p>',
   avancado:
+    '<p>A magnitude absoluta é a régua da <b>luminosidade</b>, como a aparente é a do fluxo:</p>' +
+    FORMULAS.absolutaLuminosidade +
     '<p>O módulo de distância liga a magnitude aparente m, a absoluta M e a distância d em parsecs:</p>' +
-    M.bloco(
-      M.v('M') +
-        M.o('=') +
-        M.v('m') +
-        M.o('−') +
-        M.n(5) +
-        M.o('·') +
-        M.ind(M.t('log'), M.n(10)) +
-        M.o('(') +
-        M.fr(M.v('d'), M.n(10) + M.t(' pc')) +
-        M.o(')'),
-    ),
+    FORMULAS.moduloDistancia +
+    '<p>Ou, isolando M:</p>' +
+    FORMULAS.absoluta,
   dica: 'Arraste as estrelas para os lados',
   botao: 'Começar',
 };

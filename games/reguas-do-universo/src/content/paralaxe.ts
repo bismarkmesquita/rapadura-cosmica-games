@@ -5,6 +5,7 @@
 import type { CardDef } from '@shared/ui/cards';
 import { porDispositivo } from '@shared/ui/toque';
 import { M } from '@shared/math/mathml';
+import { FORMULAS } from './formulas';
 import { fmt } from '@shared/math/format';
 import { ESTRELAS, PARSEC_ANOS_LUZ } from '@shared/physics/constantes';
 import { distanciaPorParalaxe, SEGUNDOS_POR_RADIANO } from '@shared/physics/distancias';
@@ -78,7 +79,7 @@ export const intro: CardDef = {
     '<p>Passe os meses e veja três estrelas pelo telescópio. Qual está mais perto?</p>',
   avancado:
     '<p>A paralaxe p é metade do pulo total, em segundos de arco. A distância em parsecs é o inverso dela:</p>' +
-    M.bloco(M.v('d') + M.o('[pc]') + M.o('=') + M.fr(M.n(1), M.v('p') + M.o('[″]'))) +
+    FORMULAS.paralaxe +
     '<p>Um parsec é a distância em que a paralaxe vale 1″: 206 265 vezes a distância Terra–Sol, ou 3,26 anos-luz.</p>',
   dica: 'Use a barra dos meses ou o botão Passar o ano',
   botao: 'Começar',
