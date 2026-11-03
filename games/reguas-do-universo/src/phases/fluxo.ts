@@ -7,7 +7,7 @@ import { estado } from '../core/estado';
 import { topoLivre } from '../core/palco';
 import { cards, controles, missoes, painel, toast } from '../core/ui';
 import { lampada } from '../scene/desenho';
-import { Firmeza, perto, terminaFase } from './util';
+import { Firmeza, pergunta, perto, terminaFase } from './util';
 import * as T from '../content/fluxo';
 
 type Id = keyof typeof T.LAMPADAS;
@@ -85,30 +85,13 @@ export class FaseFluxo implements Fase {
     this.mostraPergunta();
   }
 
-  /** A pergunta fica no lugar das barras, que já não fazem falta, para não cobrir as lâmpadas. */
+  /** A pergunta fica no lugar das barras, que já não fazem falta. */
   private mostraPergunta(): void {
-    const P = T.PERGUNTA;
     this.faixas = {};
-    controles(
-      `<p class="pergunta"><b>${P.titulo}</b> ${P.texto}</p><div class="opcoes">` +
-        P.opcoes.map((o, i) => `<button class="btn" data-opcao="${i}">${o.texto}</button>`).join('') +
-        `</div><p class="res" data-res></p>`,
-      (caixa) => {
-        const res = caixa.querySelector<HTMLElement>('[data-res]');
-        caixa.querySelectorAll<HTMLButtonElement>('[data-opcao]').forEach((b) => {
-          const o = P.opcoes[Number(b.dataset.opcao)];
-          b.onclick = () => {
-            if (!o.certa) {
-              if (res) res.textContent = o.resposta;
-              return;
-            }
-            controles('');
-            missoes.conclui('pergunta');
-            terminaFase(this.id, T.fim, T.DESAFIO);
-          };
-        });
-      },
-    );
+    pergunta(T.PERGUNTA, () => {
+      missoes.conclui('pergunta');
+      terminaFase(this.id, T.fim, T.DESAFIO);
+    });
   }
 
   private xDe(id: Id): number {

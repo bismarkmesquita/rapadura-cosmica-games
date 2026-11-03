@@ -124,11 +124,11 @@ body,
   border-color: var(--sol);
   background: rgba(255, 181, 71, 0.12);
 }
+/* No topo, junto dos botões: o canto de baixo fica livre para as cenas (réguas, eixos). */
 #seloJogo {
-  position: fixed;
-  z-index: 6;
-  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-  left: max(14px, env(safe-area-inset-left, 0px));
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
   opacity: 0.85;
 }
 

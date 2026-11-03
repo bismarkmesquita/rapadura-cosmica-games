@@ -2,7 +2,7 @@
  * Réguas da astronomia: ângulos, paralaxe, fluxo e magnitudes. Unidades da própria astronomia (segundos de
  * arco, parsecs, magnitudes), como nas provas de olimpíada.
  */
-import { MAG_BOL_SOL } from './constantes';
+import { MAG_BOL_SOL, SOL } from './constantes';
 
 /** Segundos de arco num radiano. É também o número de UA num parsec. */
 export const SEGUNDOS_POR_RADIANO = 206_264.806;
@@ -36,6 +36,47 @@ export const distanciaPorModulo = (m: number, M: number): number => 10 ** ((m - 
 
 /** Luminosidade, em luminosidades solares, a partir da magnitude bolométrica absoluta. */
 export const luminosidadePorMagBol = (Mbol: number): number => 10 ** (-0.4 * (Mbol - MAG_BOL_SOL));
+/** Magnitude bolométrica absoluta a partir da luminosidade em luminosidades solares. */
+export const magBolPorLuminosidade = (L: number): number => MAG_BOL_SOL - 2.5 * Math.log10(L);
 
 /** Relação período–luminosidade das Cefeidas clássicas, banda V (Benedict et al., 2007). Período em dias. */
 export const magnitudeCefeida = (periodoDias: number): number => -2.43 * (Math.log10(periodoDias) - 1) - 4.05;
+
+/** Segunda constante de radiação, hc/k, em nm·K. */
+const C2_NM_K = 14_387_769;
+
+/**
+ * Fração da energia de um corpo negro à temperatura T (K) emitida abaixo do comprimento de onda λ (nm).
+ * Série exata da integral de Planck; com 100 termos o erro fica muito abaixo do que aparece no jogo.
+ */
+export function fracaoAbaixo(lambdaNm: number, T: number): number {
+  const x = C2_NM_K / (lambdaNm * T);
+  let soma = 0;
+  for (let n = 1; n <= 100; n++)
+    soma += (Math.exp(-n * x) / n) * (x ** 3 + (3 * x ** 2) / n + (6 * x) / n ** 2 + 6 / n ** 3);
+  return (15 / Math.PI ** 4) * soma;
+}
+
+/** Faixas do espectro em nm: ultravioleta abaixo de 400, visível de 400 a 700, infravermelho acima de 700. */
+export const FAIXAS_NM = { visivelMin: 400, visivelMax: 700 };
+
+/** Fração da energia no ultravioleta, no visível e no infravermelho (somam 1). */
+export function fracoesDoEspectro(T: number): { uv: number; visivel: number; iv: number } {
+  const uv = fracaoAbaixo(FAIXAS_NM.visivelMin, T);
+  const visivel = fracaoAbaixo(FAIXAS_NM.visivelMax, T) - uv;
+  return { uv, visivel, iv: 1 - uv - visivel };
+}
+
+/** Intensidade de Planck em λ (nm), sem as constantes da frente: serve para desenhar a forma da curva. */
+export const formaPlanck = (lambdaNm: number, T: number): number =>
+  1 / (lambdaNm ** 5 * (Math.exp(C2_NM_K / (lambdaNm * T)) - 1));
+
+/**
+ * Correção bolométrica (BC = M_bol − M_V) aproximada por um corpo negro: compara a fração de luz visível da
+ * estrela com a do Sol, calibrada pela do Sol (4,74 − 4,83 = −0,09). As tabelas reais usam a banda V e os
+ * espectros de verdade, mas a tendência é a mesma: perto de zero para o Sol, negativa para quentes e frias.
+ */
+export function correcaoBolometrica(T: number): number {
+  const bcSol = SOL.magBol - SOL.magAbsoluta;
+  return bcSol + 2.5 * Math.log10(fracoesDoEspectro(T).visivel / fracoesDoEspectro(SOL.temperaturaK).visivel);
+}

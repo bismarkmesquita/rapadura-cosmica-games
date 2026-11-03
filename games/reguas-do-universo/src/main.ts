@@ -22,7 +22,7 @@ import {
   toast,
 } from './core/ui';
 import { FASES } from './phases';
-import { AVANCADO, BOTOES, EM_BREVE, FASES_MENU, TELA_CHEIA } from './content/jogo';
+import { AVANCADO, BOTOES, EM_BREVE, ESCADA_MENU, FASES_MENU, TELA_CHEIA } from './content/jogo';
 
 let faseEscolhida = 1;
 
@@ -43,16 +43,21 @@ function iniciaFase(n: number): void {
   atualizaVisibilidadeHud();
 }
 
+/** As sete fases e, por último, a escada de distâncias (a "fase" seguinte à última). */
 function montaMenuFases(): void {
+  const itens = [
+    ...FASES_MENU.map((f) => ({ ...f, eyebrow: `Fase ${f.id}` })),
+    { id: FASES_MENU.length + 1, ...ESCADA_MENU },
+  ];
   $('fases').replaceChildren(
-    ...FASES_MENU.map((f) => {
+    ...itens.map((f) => {
       const b = document.createElement('button');
       const pronta = !!FASES[f.id];
       b.className =
         'fase' + (f.id === faseEscolhida ? ' sel' : '') + (estado.reguas.has(f.id) ? ' feita' : '');
       b.disabled = !pronta;
       b.innerHTML =
-        `<span class="eyebrow">Fase ${f.id}</span><b>${f.titulo}</b>` +
+        `<span class="eyebrow">${f.eyebrow}</span><b>${f.titulo}</b>` +
         `<small>${pronta ? f.resumo : EM_BREVE}</small>`;
       b.onclick = () => {
         faseEscolhida = f.id;

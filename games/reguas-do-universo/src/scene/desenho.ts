@@ -3,6 +3,9 @@ import { TAU } from '@shared/math/format';
 
 type Ctx = CanvasRenderingContext2D;
 
+/** Cores das sete réguas, de baixo (perto, ciano) para cima (longe, âmbar), como na capa. */
+export const CORES_REGUAS = ['#73d2ff', '#86c9f2', '#9fbde0', '#b9b2c9', '#d6aa98', '#eba76a', '#f2a93b'];
+
 /** Sol com brilho curto, para cenas em que ele fica grande (o solzinho de shared/draw tem brilho longo). */
 export function sol(c: Ctx, x: number, y: number, r: number): void {
   const g = c.createRadialGradient(x, y, r * 0.6, x, y, r * 1.6);
@@ -19,6 +22,21 @@ export function sol(c: Ctx, x: number, y: number, r: number): void {
   c.beginPath();
   c.arc(x, y, r, 0, TAU);
   c.fill();
+}
+
+/**
+ * Raio (px) de uma estrela desenhada pela magnitude aparente. Cresce bem mais devagar que o brilho de verdade
+ * (2,5 vezes por magnitude), senão Vênus e o Sol engoliriam a tela; a ordem dos tamanhos é a mesma.
+ */
+export const raioPorMagnitude = (m: number): number => Math.min(30, 2 + 2.2 * Math.max(0, 6 - m) ** 0.7);
+
+/** Fração do ciclo de uma Cefeida em que o brilho sobe; o resto é a descida lenta, como nas de verdade. */
+const SUBIDA_CEFEIDA = 0.15;
+
+/** Brilho de uma Cefeida, de 0 a 1, ao longo do ciclo (`fase` em ciclos): sobe rápido e desce devagar. */
+export function curvaDeLuz(fase: number): number {
+  const f = ((fase % 1) + 1) % 1;
+  return f < SUBIDA_CEFEIDA ? f / SUBIDA_CEFEIDA : 1 - (f - SUBIDA_CEFEIDA) / (1 - SUBIDA_CEFEIDA);
 }
 
 /** Estrela com brilho em volta. */

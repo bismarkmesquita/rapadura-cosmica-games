@@ -2,7 +2,7 @@ import type { CardDef } from '@shared/ui/cards';
 import { BOTOES } from '../content/jogo';
 import { estado } from '../core/estado';
 import { fluxo } from '../core/flow';
-import { acao, cards, conquistaRegua } from '../core/ui';
+import { acao, cards, conquistaRegua, controles } from '../core/ui';
 
 /**
  * Conta há quanto tempo uma condição está valendo sem parar. As missões só contam quando o aluno para na
@@ -52,3 +52,35 @@ export function terminaFase(id: number, fim: CardDef, desafio?: DesafioDef): voi
 /** O ponto (px, py) está a até r de (x, y). */
 export const perto = (px: number, py: number, x: number, y: number, r: number): boolean =>
   Math.hypot(px - x, py - y) <= r;
+
+export interface PerguntaDef {
+  titulo: string;
+  texto: string;
+  opcoes: { texto: string; certa: boolean; resposta: string }[];
+}
+
+/**
+ * Pergunta de múltipla escolha na caixa de controles (e não no painel do canto, que cobriria a cena). Resposta
+ * errada mostra a explicação dela e deixa tentar de novo; a certa fecha a caixa e chama `aoAcertar`.
+ */
+export function pergunta(P: PerguntaDef, aoAcertar: (indice: number) => void): void {
+  controles(
+    `<p class="pergunta"><b>${P.titulo}</b> ${P.texto}</p><div class="opcoes">` +
+      P.opcoes.map((o, i) => `<button class="btn" data-opcao="${i}">${o.texto}</button>`).join('') +
+      `</div><p class="res" data-res></p>`,
+    (caixa) => {
+      const res = caixa.querySelector<HTMLElement>('[data-res]');
+      caixa.querySelectorAll<HTMLButtonElement>('[data-opcao]').forEach((b) => {
+        const i = Number(b.dataset.opcao);
+        b.onclick = () => {
+          if (!P.opcoes[i].certa) {
+            if (res) res.textContent = P.opcoes[i].resposta;
+            return;
+          }
+          controles('');
+          aoAcertar(i);
+        };
+      });
+    },
+  );
+}

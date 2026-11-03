@@ -14,6 +14,13 @@ export const FASES_MENU: { id: number; titulo: string; resumo: string; regua: st
 
 export const EM_BREVE = 'Em breve';
 
+/** Botão da tela final no menu. */
+export const ESCADA_MENU = {
+  eyebrow: 'Final',
+  titulo: 'Escada de distâncias',
+  resumo: 'Todas as réguas juntas',
+};
+
 export const AVANCADO = {
   rotulo: 'Avançado',
   /** Título do bloco de fórmulas nos slides. */
@@ -24,7 +31,8 @@ export const AVANCADO = {
 
 export const BOTOES = {
   comecar: 'Começar',
-  proxima: (n: number): string => `Ir para a fase ${n}`,
+  proxima: (n: number): string =>
+    n > FASES_MENU.length ? 'Ver a escada de distâncias' : `Ir para a fase ${n}`,
   menu: 'Voltar ao menu',
   pausa: porDispositivo('Pausa (Esc)', 'II'),
 };

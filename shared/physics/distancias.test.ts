@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import {
+  correcaoBolometrica,
   diametroAngular,
   diametroPorAngulo,
   distanciaPorModulo,
   distanciaPorParalaxe,
   fluxo,
+  fracaoAbaixo,
+  fracoesDoEspectro,
   luminosidadePorMagBol,
+  magBolPorLuminosidade,
   magnitudeAbsoluta,
   magnitudeAparente,
   magnitudeCefeida,
@@ -70,6 +74,7 @@ describe('magnitudes', () => {
   it('o Sol tem luminosidade 1 pela magnitude bolométrica', () => {
     expect(luminosidadePorMagBol(SOL.magBol)).toBe(1);
     expect(luminosidadePorMagBol(SOL.magBol - 5)).toBeCloseTo(100, 10);
+    expect(magBolPorLuminosidade(100)).toBeCloseTo(SOL.magBol - 5, 10);
   });
 });
 
@@ -77,5 +82,25 @@ describe('Cefeidas', () => {
   it('uma Cefeida de 10 dias tem M ≈ −4,05; períodos maiores, mais brilho', () => {
     expect(magnitudeCefeida(10)).toBeCloseTo(-4.05, 10);
     expect(magnitudeCefeida(30)).toBeLessThan(magnitudeCefeida(10));
+  });
+});
+
+describe('corpo negro', () => {
+  it('um quarto da energia fica abaixo do pico de Wien', () => {
+    expect(fracaoAbaixo(2_897_771.955 / SOL.temperaturaK, SOL.temperaturaK)).toBeCloseTo(0.25, 3);
+  });
+
+  it('o Sol emite uns 37% no visível; Spica, azul e quente, menos de 10%', () => {
+    const sol = fracoesDoEspectro(SOL.temperaturaK);
+    expect(sol.uv + sol.visivel + sol.iv).toBeCloseTo(1, 10);
+    expect(sol.visivel).toBeCloseTo(0.366, 2);
+    expect(fracoesDoEspectro(ESTRELAS.spica.temperaturaK).visivel).toBeLessThan(0.1);
+    expect(fracoesDoEspectro(ESTRELAS.betelgeuse.temperaturaK).iv).toBeGreaterThan(0.8);
+  });
+
+  it('a correção bolométrica é −0,09 no Sol e bem negativa nas estrelas quentes e frias', () => {
+    expect(correcaoBolometrica(SOL.temperaturaK)).toBeCloseTo(-0.09, 10);
+    expect(correcaoBolometrica(ESTRELAS.spica.temperaturaK)).toBeLessThan(-1.5);
+    expect(correcaoBolometrica(ESTRELAS.betelgeuse.temperaturaK)).toBeLessThan(-0.5);
   });
 });

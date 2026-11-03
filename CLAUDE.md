@@ -110,6 +110,11 @@ Cada fase é uma classe em `phases/` que implementa a interface `Fase` de `types
 `hud` (painel). Toda fase cria seus objetos dentro de um `THREE.Group`, que é descartado ao trocar de fase.
 Para mudar de fase ou voltar ao menu, use `fluxo` de `core/flow.ts`; nunca importe `main.ts`.
 
+Jogos sem 3D (como o `reguas-do-universo`) não usam Three.js: cada fase desenha a própria cena em Canvas 2D
+(`desenha(c, w, h)`) e recebe cliques e toques por `aperta`, `arrasta` e `solta`, com o contrato no `types.ts` do
+jogo. A cena fica entre as caixas do topo e a caixa de controles da fase (`topoLivre` e `alturaLivre`, em
+`core/palco.ts`), para nada ficar embaixo dos painéis; perguntas de múltipla escolha vão na caixa de controles.
+
 ### Conteúdo separado do código
 
 Textos de cards, missões, avisos, listas de teclas e rótulos dos botões de toque ficam **só** em `content/`. A lógica
