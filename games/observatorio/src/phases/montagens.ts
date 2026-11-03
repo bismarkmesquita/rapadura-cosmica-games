@@ -9,6 +9,7 @@ import { tela, topoLivre } from '../core/palco';
 import { descarta, renderer3d, type Cena3D } from '../core/tres';
 import { cards, controles, missoes, painel, toast } from '../core/ui';
 import { SEM_3D } from '../content/jogo';
+import { saturno } from '../scene/desenho';
 import {
   apontaAltaz,
   apontaEquatorial,
@@ -399,21 +400,8 @@ export class FaseMontagens implements Fase {
     c.fill();
     c.clip();
     if (v?.dentro) {
-      const px = x + v.x * r;
-      const py = y - v.y * r;
-      const tam = r * 0.16;
-      c.translate(px, py);
       // Os anéis ficam no sentido leste–oeste do céu: na imagem, perpendiculares ao norte.
-      c.rotate(v.giro);
-      c.strokeStyle = '#f2d39a';
-      c.lineWidth = Math.max(2, tam * 0.28);
-      c.beginPath();
-      c.ellipse(0, 0, tam * 2.3, tam * 0.75, 0, 0, TAU);
-      c.stroke();
-      c.fillStyle = '#e3b35c';
-      c.beginPath();
-      c.arc(0, 0, tam, 0, TAU);
-      c.fill();
+      saturno(c, x + v.x * r, y - v.y * r, r * 0.16, v.giro);
     } else rotulo(c, T.ROTULOS.fora, x, y + 4, COR.muted, 'center', 11);
     c.restore();
     // Fora da ocular: uma seta na borda mostra para que lado Saturno foi, como numa buscadora.

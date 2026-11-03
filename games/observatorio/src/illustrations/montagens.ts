@@ -2,27 +2,12 @@
 import type { Ilustracao } from '@shared/ui/illustration';
 import { COR, rotulo } from '@shared/draw/helpers';
 import { TAU } from '@shared/math/format';
+import { saturno } from '../scene/desenho';
 
 /** Segundos para Saturno cruzar o céu da ilustração. */
 const TRAVESSIA = 6;
 /** Quanto a imagem gira na altazimutal durante a travessia (radianos). */
 const GIRO_TOTAL = 1.4;
-
-function saturno(c: CanvasRenderingContext2D, x: number, y: number, tam: number, giro: number): void {
-  c.save();
-  c.translate(x, y);
-  c.rotate(giro);
-  c.strokeStyle = '#f2d39a';
-  c.lineWidth = Math.max(1.5, tam * 0.28);
-  c.beginPath();
-  c.ellipse(0, 0, tam * 2.3, tam * 0.75, 0, 0, TAU);
-  c.stroke();
-  c.fillStyle = '#e3b35c';
-  c.beginPath();
-  c.arc(0, 0, tam, 0, TAU);
-  c.fill();
-  c.restore();
-}
 
 export const montagens: Ilustracao = {
   leg: 'Enquanto Saturno cruza o céu, a imagem gira na ocular da altazimutal e fica parada na equatorial.',

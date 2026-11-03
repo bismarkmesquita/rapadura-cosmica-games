@@ -6,6 +6,7 @@ import {
   escalaDePlaca,
   ganhoDeLuz,
   magnitudeLimite,
+  pupilaDeSaida,
   razaoFocal,
   resolucaoRayleigh,
 } from './telescopio';
@@ -17,6 +18,8 @@ describe('telescópio de 200 mm, f/5', () => {
     expect(aumento(1000, 10)).toBe(100);
     expect(razaoFocal(1000, 200)).toBe(5);
     expect(aumentoMaximoUtil(200)).toBe(400);
+    // No aumento máximo útil, a pupila de saída fica em meio milímetro.
+    expect(pupilaDeSaida(200, 400)).toBe(0.5);
   });
 
   it('junta umas 800 vezes mais luz que o olho e chega à magnitude 13', () => {

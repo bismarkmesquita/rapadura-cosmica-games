@@ -11,6 +11,9 @@ export const aumento = (Fobj: number, focular: number): number => Fobj / focular
 /** Razão focal (o "f/" do telescópio). */
 export const razaoFocal = (F: number, D: number): number => F / D;
 
+/** Pupila de saída (mm): o diâmetro do feixe que sai da ocular. Menor que uns 0,5 mm, a imagem escurece e borra. */
+export const pupilaDeSaida = (Dmm: number, aumentoX: number): number => Dmm / aumentoX;
+
 /** Aumento útil máximo, pela regra prática de 2 vezes a abertura em milímetros. */
 export const aumentoMaximoUtil = (Dmm: number): number => 2 * Dmm;
 
