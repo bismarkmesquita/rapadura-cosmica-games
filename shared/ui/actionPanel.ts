@@ -10,6 +10,7 @@ export class PainelAcao {
   ) {}
 
   mostra(eyebrow: string, titulo: string, html: string, ligar?: (corpo: HTMLElement) => void): void {
+    this.raiz.classList.remove('painel-acao--curto');
     this.eyebrow.textContent = eyebrow;
     this.titulo.textContent = titulo;
     this.corpo.innerHTML = html;
@@ -31,6 +32,14 @@ export class PainelAcao {
         c.querySelector<HTMLButtonElement>('[data-acao]')!.onclick = aoClicar;
       },
     );
+  }
+
+  /** Só um botão no canto, sem a caixa do painel, para quase não cobrir a cena. */
+  curto(rotulo: string, aoClicar: () => void): void {
+    this.mostra('', '', `<button class="btn prim" data-acao>${rotulo}</button>`, (c) => {
+      c.querySelector<HTMLButtonElement>('[data-acao]')!.onclick = aoClicar;
+    });
+    this.raiz.classList.add('painel-acao--curto');
   }
 
   /**

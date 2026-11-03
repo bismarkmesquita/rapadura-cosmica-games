@@ -17,6 +17,8 @@ export interface CardDef {
   botao?: string;
   /** Chamado ao fechar o card. */
   aoFechar?: (() => void) | null;
+  /** Segundo botão, ao lado do principal. Sem `aoClicar`, só fecha o card e o aluno continua na fase. */
+  secundario?: { rotulo: string; aoClicar?: () => void };
 }
 
 /**
@@ -58,7 +60,13 @@ export class Cards {
   /** Reabre o último card só para leitura, sem repetir a ação de fechar. */
   revisa(): void {
     if (!this.ultimo) return;
-    this.fila.unshift({ ...this.ultimo, aoFechar: null, revisao: true });
+    this.fila.unshift({
+      ...this.ultimo,
+      aoFechar: null,
+      botao: undefined,
+      secundario: undefined,
+      revisao: true,
+    });
     this.abreProximo();
   }
 
@@ -94,6 +102,7 @@ export class Cards {
       (il ? `<figure><canvas aria-hidden="true"></canvas><figcaption>${il.leg}</figcaption></figure>` : '') +
       `</div><div class="acoes">` +
       (c.dica ? `<span class="dica">${c.dica}</span>` : '') +
+      (c.secundario ? `<button class="btn" data-card-secundario>${c.secundario.rotulo}</button>` : '') +
       `<button class="btn prim" data-card-ok>${c.botao ?? 'Continuar'} ↵</button></div>`;
     this.camada.hidden = false;
     this.aoAbrir();
@@ -119,5 +128,12 @@ export class Cards {
       // Sem rolar: num slide mais alto que a tela, o foco no botão levaria a vista para o fim e esconderia o título.
       setTimeout(() => ok.focus({ preventScroll: true }), 30);
     }
+    const secundario = this.el.querySelector<HTMLButtonElement>('[data-card-secundario]');
+    if (secundario)
+      secundario.onclick = () => {
+        this.camada.hidden = true;
+        c.secundario?.aoClicar?.();
+        if (!this.aberto) this.abreProximo();
+      };
   }
 }

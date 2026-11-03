@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { LUZ } from '../core/engine';
 import { difAngulo, fmt, lerNumero, TAU } from '@shared/math/format';
 import { avanca, gravidadeCentral } from '@shared/physics/gravity';
+import { fimDeFase } from '@shared/ui/fimDeFase';
 import { linhaHud, medidorHud, tituloHud } from '@shared/ui/hud';
 import { COR } from '@shared/draw/helpers';
 import { $ } from '@shared/ui/dom';
@@ -10,7 +11,7 @@ import { scene } from '../core/engine';
 import { nave, posicionaNave } from '../core/estado';
 import { entraMapa, iniciaCamera, rig } from '../core/camera';
 import { controlaNave, moveNave, registraTrilha } from '../core/ship';
-import { cards, info, missoes, painel, teclasDaFase, toast } from '../core/ui';
+import { acao, cards, info, missoes, painel, teclasDaFase, toast } from '../core/ui';
 import { desenhaAlvo, rotulo3D } from '../core/overlay';
 import { fluxo } from '../core/flow';
 import { brilho } from '../scene/sprites';
@@ -243,7 +244,7 @@ export class FaseNewton implements Fase {
       if (this.angAnt !== null) this.angAcum += difAngulo(a, this.angAnt);
       this.angAnt = a;
       if (Math.abs(this.angAcum) >= TAU && missoes.conclui('orbitaNave'))
-        cards.enfileira({ ...T.orbitaNave, aoFechar: () => fluxo.iniciaFase(3) });
+        fimDeFase(acao, cards, { ...T.orbitaNave, aoFechar: () => fluxo.iniciaFase(3) });
     }
     const energia = (nave.vx ** 2 + nave.vy ** 2) / 2 - GM / r;
     if (!this.escapeVisto && r > 2500 && energia > 0 && dLua > 600) {

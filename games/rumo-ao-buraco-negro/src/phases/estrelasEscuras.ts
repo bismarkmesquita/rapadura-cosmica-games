@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { LUZ } from '../core/engine';
 import { fmt } from '@shared/math/format';
 import { gravidadeCentral } from '@shared/physics/gravity';
+import { fimDeFase } from '@shared/ui/fimDeFase';
 import { linhaHud, medidorHud, tituloHud } from '@shared/ui/hud';
 import { COR } from '@shared/draw/helpers';
 import type { Fase } from '../types';
@@ -183,7 +184,7 @@ export class FaseEstrelasEscuras implements Fase {
       msgAcerto: d.acerto,
       aoTerminar: () => {
         missoes.conclui('calculo');
-        cards.enfileira({ ...T.wheeler, aoFechar: () => fluxo.iniciaFase(5) });
+        fimDeFase(acao, cards, { ...T.wheeler, aoFechar: () => fluxo.iniciaFase(5) });
       },
     });
   }

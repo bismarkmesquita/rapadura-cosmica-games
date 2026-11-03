@@ -110,6 +110,9 @@ Cada fase é uma classe em `phases/` que implementa a interface `Fase` de `types
 `hud` (painel). Toda fase cria seus objetos dentro de um `THREE.Group`, que é descartado ao trocar de fase.
 Para mudar de fase ou voltar ao menu, use `fluxo` de `core/flow.ts`; nunca importe `main.ts`.
 
+Ao concluir as missões, a fase não sai da tela sozinha: use `fimDeFase` (`shared/ui/fimDeFase.ts`). Ele mostra o botão
+"Avançar" no canto, e o slide final oferece "Ficar nesta fase", para o professor poder explicar com a cena aberta.
+
 Jogos sem 3D (como o `reguas-do-universo`) não usam Three.js: cada fase desenha a própria cena em Canvas 2D
 (`desenha(c, w, h)`) e recebe cliques e toques por `aperta`, `arrasta` e `solta`, com o contrato no `types.ts` do
 jogo. A cena fica entre as caixas do topo e a caixa de controles da fase (`topoLivre` e `alturaLivre`, em
