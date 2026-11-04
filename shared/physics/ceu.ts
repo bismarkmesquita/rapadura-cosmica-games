@@ -21,6 +21,18 @@ export function altAz(H: number, dec: number, lat: number): { alt: number; az: n
 }
 
 /**
+ * Ângulo horário (positivo, no oeste) em que o astro passa pela altura pedida; o mesmo valor com sinal trocado vale
+ * para a subida, no leste. Devolve null se ele nunca passa por essa altura.
+ */
+export function anguloHorarioNaAltura(alt: number, dec: number, lat: number): number | null {
+  const [a, d, f] = [alt * RAD, dec * RAD, lat * RAD];
+  const denominador = Math.cos(d) * Math.cos(f);
+  if (Math.abs(denominador) < 1e-9) return null;
+  const cosH = (Math.sin(a) - Math.sin(d) * Math.sin(f)) / denominador;
+  return Math.abs(cosH) > 1 ? null : Math.acos(cosH) / RAD;
+}
+
+/**
  * Ângulo paralático: quanto o norte celeste está girado em relação à direção do zênite, na imagem. É zero no
  * meridiano e muda enquanto o astro anda: numa montagem altazimutal, a imagem gira junto.
  */
