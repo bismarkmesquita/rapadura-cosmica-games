@@ -10,6 +10,7 @@ export class PainelAcao {
   ) {}
 
   mostra(eyebrow: string, titulo: string, html: string, ligar?: (corpo: HTMLElement) => void): void {
+    this.raiz.classList.remove('painel-acao--curto');
     this.eyebrow.textContent = eyebrow;
     this.titulo.textContent = titulo;
     this.corpo.innerHTML = html;
@@ -33,9 +34,17 @@ export class PainelAcao {
     );
   }
 
+  /** Só um botão no canto, sem a caixa do painel, para quase não cobrir a cena. */
+  curto(rotulo: string, aoClicar: () => void): void {
+    this.mostra('', '', `<button class="btn prim" data-acao>${rotulo}</button>`, (c) => {
+      c.querySelector<HTMLButtonElement>('[data-acao]')!.onclick = aoClicar;
+    });
+    this.raiz.classList.add('painel-acao--curto');
+  }
+
   /**
-   * Desafio de cálculo opcional (EF2). Sempre tem "Pular desafio",
-   * para a aula do EF1 seguir sem a conta.
+   * Desafio de cálculo do modo Avançado, sempre opcional: tem "Pular desafio",
+   * para a aula seguir sem a conta.
    */
   calculo(op: {
     eyebrow?: string;
@@ -49,7 +58,7 @@ export class PainelAcao {
     aoTerminar?: () => void;
   }): void {
     this.mostra(
-      op.eyebrow ?? 'Desafio EF2 · opcional',
+      op.eyebrow ?? 'Avançado · opcional',
       op.titulo,
       `<p>${op.texto}</p><div style="margin:2px 0 8px">${op.formula}</div>` +
         `<label>Resposta: <input data-in inputmode="decimal" placeholder="${op.unidade}"> ${op.unidade}</label>` +

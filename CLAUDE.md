@@ -9,8 +9,8 @@ serve cada jogo no mesmo domínio por um _rewrite_: `rapaduracosmica.com.br/game
 publica em `/games/<slug>/`. A página do catálogo lê o `catalogo.json` que o build daqui gera, então um jogo novo
 aparece no site sem mexer no front-end.
 
-Os jogos são usados principalmente em **aulas ao vivo**: o professor joga e compartilha a tela com turmas de
-EF1 (1º ao 5º ano) e EF2 (6º ao 9º ano). Siga este guia ao criar ou alterar qualquer jogo.
+Os jogos são usados principalmente em **aulas ao vivo**: o professor joga e compartilha a tela com turmas que
+misturam alunos que estão começando e alunos que já fazem contas. Siga este guia ao criar ou alterar qualquer jogo.
 
 ## Tecnologias
 
@@ -70,7 +70,6 @@ rapadura-games/
   "titulo": "Rumo ao Buraco Negro",
   "resumo": "Uma frase de até 140 caracteres para o card do catálogo.",
   "aula": "Buracos negros",
-  "turmas": ["EF1", "EF2"],
   "temas": ["Leis de Kepler", "Gravitação universal"],
   "fases": 5,
   "duracaoMinutos": 30,
@@ -94,7 +93,7 @@ O build (`npm run build`) gera `dist/games/catalogo.json` (código em `shared/ca
 
 ```json
 {
-  "versaoCatalogo": 1,
+  "versaoCatalogo": 2,
   "jogos": [{ "...campos do jogo.json": "", "url": "/games/<slug>/", "capa": "/games/<slug>/capa.svg" }]
 }
 ```
@@ -110,6 +109,14 @@ Cada fase é uma classe em `phases/` que implementa a interface `Fase` de `types
 `init`, `update(dt)` (física e missões), `sync(dt)` (posição dos objetos 3D), `overlay` (rótulos 2D),
 `hud` (painel). Toda fase cria seus objetos dentro de um `THREE.Group`, que é descartado ao trocar de fase.
 Para mudar de fase ou voltar ao menu, use `fluxo` de `core/flow.ts`; nunca importe `main.ts`.
+
+Ao concluir as missões, a fase não sai da tela sozinha: use `fimDeFase` (`shared/ui/fimDeFase.ts`). Ele mostra o botão
+"Avançar" no canto, e o slide final oferece "Ficar nesta fase", para o professor poder explicar com a cena aberta.
+
+Jogos sem 3D (como o `reguas-do-universo`) não usam Three.js: cada fase desenha a própria cena em Canvas 2D
+(`desenha(c, w, h)`) e recebe cliques e toques por `aperta`, `arrasta` e `solta`, com o contrato no `types.ts` do
+jogo. A cena fica entre as caixas do topo e a caixa de controles da fase (`topoLivre` e `alturaLivre`, em
+`core/palco.ts`), para nada ficar embaixo dos painéis; perguntas de múltipla escolha vão na caixa de controles.
 
 ### Conteúdo separado do código
 
@@ -136,14 +143,18 @@ Texto que fala de tecla ou mouse ("Aperte F", "Mova o mouse") precisa da versão
 
 ## Padrão pedagógico
 
-- **Público duplo.** O texto principal de cada card deve ser entendido por uma criança do EF1. Fórmulas e
-  detalhes vão no bloco recolhido **"Aprofundar (EF2)"**.
+- **Duas camadas, sem série nem ano.** O texto principal de cada card deve ser entendido por quem está
+  começando, sem contas. Fórmulas, contas e números exatos vão no bloco **"Avançado"** (campo `avancado`),
+  recolhido por padrão. Um jogo pode ter um botão global de modo Avançado que mostra ou esconde essa camada em
+  todas as fases (como o Réguas do Universo); com ele desligado, nenhuma fase pode depender de conta. Os jogos não
+  citam série, ano nem turma (EF1, EF2…), nem no catálogo.
 - **Card.** Campos: `eyebrow` (quem · ano · conceito, ex.: "Kepler · 1609 · 1ª lei"), `titulo` afirmativo e
-  curto, `corpo` com 2 ou 3 parágrafos curtos, `ef2` opcional com fórmula em MathML, `ilus` e `dica`.
+  curto, `corpo` com 2 ou 3 parágrafos curtos, `avancado` opcional com fórmula em MathML, `ilus` e `dica`.
 - **Toda explicação tem ilustração animada** ao lado (`illustrations/`), mostrando o que o texto diz.
 - **Fatos conferidos.** Datas, valores e nomes vêm de fontes confiáveis; liste as fontes no PR.
 - **Avise quando algo está fora de escala** ou exagerado para caber na tela.
-- **Desafios de cálculo do EF2 são sempre opcionais**, com botão "Pular desafio", para não travar a aula do EF1.
+- **Desafios de cálculo do Avançado são sempre opcionais**, com botão "Pular desafio", para a aula seguir sem a
+  conta.
 - **Missões curtas e claras**, com uma seta na tela apontando o alvo.
 - Um jogo deve caber numa aula de 1 hora; fases devem poder ser escolhidas direto no menu.
 
@@ -207,7 +218,7 @@ em telas de toque sem mouse (`telaDeToque()`); no computador nada muda.
   O painel de ação fica no centro, com rolagem; o canhão de Newton fica à direita, acima dos botões, compacto (e
   esconde o painel da nave enquanto está aberto).
 - **Sem zoom da página**: `touch-action: none` no corpo e no canvas (só camadas, texto do slide e painéis rolam na
-  vertical) e `maximum-scale=1` no viewport (também evita o zoom do iPhone ao tocar num campo do desafio EF2).
+  vertical) e `maximum-scale=1` no viewport (também evita o zoom do iPhone ao tocar num campo do desafio Avançado).
 - **Toque não vira mouse**: muitos celulares disparam eventos de mouse "de cópia" depois de um toque; `core/input.ts`
   ignora mouse por 1 s depois de cada toque, senão o toque acelera e vira a nave para o dedo.
 - **Slides cabem na tela** (`.card--slide`, em `shared/styles/ui.css`, telas com até 500 px de altura): o card tem
@@ -287,4 +298,4 @@ o que serve para mandar a um professor ou usar numa aula offline.
 ### Pedido-modelo para um novo chat
 
 > Crie um jogo novo no repositório rapadura-games seguindo o guia (CLAUDE.md / "Guia dos jogos Rapadura Cósmica").
-> Tema da aula: **\_. Turmas: EF1 e EF2. Ideia das fases: _**. Duração: cerca de \_\_\_ minutos.
+> Tema da aula: **\_. Ideia das fases: _**. Duração: cerca de \_\_\_ minutos.

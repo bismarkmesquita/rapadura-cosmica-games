@@ -35,7 +35,7 @@ export const intro: CardDef = {
     '<p>Newton percebeu que a força que faz uma maçã cair é a mesma que segura a Lua em volta da Terra e os planetas em volta do Sol. Ele chamou isso de <b>gravitação universal</b>.</p>' +
     '<p>Toda massa atrai toda massa. Quanto mais massa, mais forte o puxão; quanto mais longe, mais fraco.</p>' +
     '<p>Agora a sua nave sente a gravidade da Terra. A seta azul mostra para onde ela puxa você e o painel mostra a força.</p>',
-  ef2:
+  avancado:
     M.bloco(
       M.v('F') +
         M.o('=') +
@@ -53,7 +53,7 @@ export const distancia: CardDef = {
     '<p>Você está a dois raios terrestres do centro da Terra, uns 12.700 km. Aqui a gravidade é só <b>1/4</b> da que sentimos no chão.</p>' +
     '<p>Quando você começou, a uns 4,5 raios, ela era quase 20 vezes mais fraca que na superfície. Olhe o medidor no painel enquanto desce.</p>' +
     '<p>A gravidade nunca some de vez. Ela só vai ficando mais fraca com a distância.</p>',
-  ef2:
+  avancado:
     '<p>Na superfície, g ≈ 9,8 m/s². A uma distância d do centro:</p>' +
     M.bloco(
       M.v('g') +
@@ -73,7 +73,7 @@ export const canhao: CardDef = {
     '<p>Newton imaginou um canhão no topo de uma montanha altíssima. Uma bala lenta cai perto. Uma bala mais rápida cai mais longe.</p>' +
     '<p>E se a bala fosse tão rápida que, enquanto cai, a Terra "se curvasse" embaixo dela? Ela cairia para sempre, dando voltas. Isso é uma <b>órbita</b>.</p>' +
     '<p>Use o painel do canhão: escolha a velocidade e dispare. Tente achar a velocidade que coloca a bala em órbita. A montanha e o canhão estão fora de escala.</p>',
-  ef2:
+  avancado:
     '<p>Sem ar, a velocidade para uma órbita rasante e a velocidade de escape são:</p>' +
     M.bloco(vOrbita + M.o('≈') + M.n('7,9') + M.t(' km/s')) +
     M.bloco(vEscape + M.o('≈') + M.n('11,2') + M.t(' km/s')) +
@@ -89,7 +89,7 @@ export const orbitaBala: CardDef = {
     '<p>A bala continua sendo puxada pela Terra o tempo todo. Ela está caindo! Mas anda tão rápido de lado que o chão sempre "foge" de baixo dela.</p>' +
     '<p>É exatamente assim que a Lua gira em volta da Terra, e a Terra em volta do Sol. As regras de Kepler saem todas dessa ideia.</p>' +
     `<p>Agora é a sua vez: ${porDispositivo('clique', 'toque')} em <b>Decolar com a nave</b> e tente dar uma volta completa na Terra.</p>`,
-  ef2:
+  avancado:
     '<p>Numa órbita circular, a gravidade faz o papel de força centrípeta:</p>' +
     M.bloco(
       M.fr(M.v('G') + M.v('M') + M.v('m'), M.pot(M.v('r'), M.n(2))) +

@@ -10,7 +10,6 @@ const ficha = (slug: string, extra: Partial<ManifestoJogo> = {}): ManifestoJogo 
   titulo: 'Jogo de teste',
   resumo: 'Um jogo de teste.',
   aula: 'Teste',
-  turmas: ['EF1'],
   temas: ['Teste'],
   fases: 1,
   duracaoMinutos: 10,
@@ -69,7 +68,7 @@ describe('montaCatalogo', () => {
       oculto: ficha('oculto', { status: 'rascunho' }),
     });
     const cat = montaCatalogo(pasta);
-    expect(cat.versaoCatalogo).toBe(1);
+    expect(cat.versaoCatalogo).toBe(2);
     expect(cat.jogos.map((j) => j.slug)).toEqual(['novo', 'antigo']);
     expect(cat.jogos[0]).toMatchObject({ url: '/games/novo/', capa: '/games/novo/capa.svg' });
   });

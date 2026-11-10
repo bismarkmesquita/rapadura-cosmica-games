@@ -47,7 +47,7 @@ export const curvatura: CardDef = {
     '<p>Quando o Sol aparece, a grade afunda em volta dele. Para Einstein, é isso que a massa faz: ela <b>curva o espaço-tempo</b>.</p>' +
     '<p>Quanto mais massa, mais funda a curva. A Terra também faz uma curvinha, bem menor.</p>' +
     `<p>Agora lance sondas ${porDispositivo('com a tecla <kbd>F</kbd>', 'com o botão <b>Sonda</b>')}, em direções diferentes, e veja que caminho elas fazem.</p>`,
-  ef2:
+  avancado:
     '<p>As equações de Einstein ligam a curvatura do espaço-tempo, do lado esquerdo, à matéria e à energia, do lado direito:</p>' +
     M.bloco(
       M.ind(M.v('G'), M.v('μν')) +
@@ -67,7 +67,7 @@ export const sondas: CardDef = {
     '<p>As sondas fazem curvas, e algumas ficam girando em volta do Sol. Na ideia de Einstein, não há uma força invisível puxando: elas seguem o caminho mais "reto" possível num espaço-tempo curvado.</p>' +
     '<p>O físico John Wheeler resumiu assim: a matéria diz ao espaço-tempo como se curvar, e o espaço-tempo diz à matéria como se mover.</p>' +
     '<p>E a luz? Ela também segue as curvas. Voe até o observatório para ver.</p>',
-  ef2: '<p>A relatividade geral resolveu um mistério antigo: a órbita de Mercúrio gira lentamente, cerca de 43 segundos de arco por século a mais do que a teoria de Newton previa. A conta de Einstein deu exatamente esse valor.</p>',
+  avancado: '<p>A relatividade geral resolveu um mistério antigo: a órbita de Mercúrio gira lentamente, cerca de 43 segundos de arco por século a mais do que a teoria de Newton previa. A conta de Einstein deu exatamente esse valor.</p>',
 };
 
 export const eclipse: CardDef = {
@@ -78,7 +78,7 @@ export const eclipse: CardDef = {
     '<p>A linha amarela é a luz de uma estrela distante. Ao passar perto do Sol, ela faz uma curva. Quem está no observatório vê a estrela na direção da linha tracejada, fora do lugar de verdade.</p>' +
     '<p>Em 1919, durante um eclipse total do Sol, astrônomos fotografaram estrelas perto do Sol em <b>Sobral, no Ceará</b>, e na ilha de Príncipe, na África. As estrelas apareceram deslocadas, como Einstein tinha previsto, e ele ficou famoso no mundo todo.</p>' +
     '<p>Neste jogo, a curva está muito exagerada.</p>',
-  ef2:
+  avancado:
     '<p>Para um raio de luz que passa rente ao Sol, Einstein previu um desvio de apenas 1,75 segundo de arco:</p>' +
     M.bloco(M.v('α') + M.o('=') + M.fr(M.n(4) + M.v('G') + M.v('M'), M.pot(M.v('c'), M.n(2)) + M.v('b'))) +
     '<p>em que b é a menor distância entre o raio de luz e o centro do Sol.</p>',
@@ -91,7 +91,7 @@ export const tempo: CardDef = {
   corpo:
     '<p>Compare os dois relógios no painel. Perto do Sol, o relógio da nave andou mais devagar do que o relógio de quem ficou longe.</p>' +
     '<p>Isso acontece de verdade, mas perto do Sol ou da Terra o efeito é minúsculo; aqui ele está muito exagerado. Mesmo assim, os satélites de GPS precisam corrigir seus relógios todos os dias. Sem isso, o mapa do celular erraria vários quilômetros por dia.</p>',
-  ef2:
+  avancado:
     '<p>O ritmo do tempo a uma distância r de uma massa M, comparado com o de alguém muito longe, é:</p>' +
     M.bloco(
       M.fr(M.ind(M.v('Δt'), M.t('perto')), M.ind(M.v('Δt'), M.t('longe'))) +

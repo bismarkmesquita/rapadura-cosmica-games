@@ -209,19 +209,19 @@ kbd {
   margin: 0 0 12px;
   max-width: 62ch;
 }
-.card .ef2 {
+.card .avancado {
   margin-top: 14px;
   border-top: 1px dashed var(--line);
   padding-top: 12px;
 }
-.card .ef2 summary {
+.card .avancado summary {
   cursor: pointer;
   font-family: var(--f-display);
   font-weight: 600;
   color: var(--orbita);
   letter-spacing: 0.04em;
 }
-.card .ef2 div {
+.card .avancado div {
   margin-top: 10px;
   font-size: 17px;
 }
@@ -343,6 +343,21 @@ math[display='block'] {
   min-height: 1.3em;
   font-size: 14px;
   margin-top: 6px;
+}
+/* Fim de fase: só o botão, para caber ao lado da caixa de controles e não cobrir a cena. */
+.painel-acao.painel-acao--curto {
+  width: auto;
+}
+.painel-acao--curto .box {
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.painel-acao--curto .eyebrow,
+.painel-acao--curto h3 {
+  display: none;
 }
 
 /* Selo e links do canal */

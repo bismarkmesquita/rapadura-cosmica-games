@@ -13,9 +13,13 @@ export interface JogoNoCatalogo extends ManifestoJogo {
   capa: string;
 }
 
-/** Formato de dist/games/catalogo.json, lido pela página /games do site. */
+/**
+ * Formato de dist/games/catalogo.json, lido pela página /games do site. A versão 2 tirou `turmas` das fichas.
+ */
+export const VERSAO_CATALOGO = 2;
+
 export interface Catalogo {
-  versaoCatalogo: 1;
+  versaoCatalogo: typeof VERSAO_CATALOGO;
   jogos: JogoNoCatalogo[];
 }
 
@@ -55,5 +59,5 @@ export function montaCatalogo(pastaJogos: string): Catalogo {
 
   if (erros.length) throw new Error(`Fichas de jogo inválidas:\n- ${erros.join('\n- ')}`);
   jogos.sort((a, b) => b.atualizadoEm.localeCompare(a.atualizadoEm));
-  return { versaoCatalogo: 1, jogos };
+  return { versaoCatalogo: VERSAO_CATALOGO, jogos };
 }

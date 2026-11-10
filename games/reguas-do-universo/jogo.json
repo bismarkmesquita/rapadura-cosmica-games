@@ -1,0 +1,13 @@
+{
+  "slug": "reguas-do-universo",
+  "titulo": "Réguas do Universo",
+  "resumo": "Meça o céu com ângulos, paralaxe, brilho e magnitudes, e suba a escada de distâncias até outras galáxias.",
+  "aula": "Fluxo, magnitudes e distâncias",
+  "temas": ["Diâmetro angular", "Paralaxe", "Fluxo e luminosidade", "Magnitudes", "Velas-padrão"],
+  "fases": 7,
+  "duracaoMinutos": 60,
+  "tecnologias": [],
+  "status": "rascunho",
+  "versao": "0.1.0",
+  "atualizadoEm": "2026-11-02"
+}

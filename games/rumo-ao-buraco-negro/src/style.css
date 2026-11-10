@@ -324,6 +324,9 @@ body {
   transform: translateX(-50%);
   width: min(340px, 46vw);
 }
+.toque .painel-acao.painel-acao--curto {
+  width: auto;
+}
 .toque .painel-acao .box {
   max-height: calc(100dvh - 80px);
   overflow-y: auto;

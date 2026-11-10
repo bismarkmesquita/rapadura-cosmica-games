@@ -50,7 +50,7 @@ export const lei1: CardDef = {
     '<p>Durante séculos, as pessoas acharam que os planetas andavam em círculos perfeitos. Kepler mostrou que as órbitas são <b>elipses</b>, uma espécie de círculo achatado.</p>' +
     '<p>O Sol não fica no centro: ele fica num ponto especial chamado <b>foco</b>. Toda elipse tem dois focos, e o outro fica vazio. Agora o foco vazio da órbita de Marte aparece marcado no espaço.</p>' +
     `<p>As órbitas reais são quase redondas.${porDispositivo(' Aperte <kbd>E</kbd> para exagerar o achatamento e enxergar melhor.', '')}</p>`,
-  ef2:
+  avancado:
     '<p>Em qualquer ponto da elipse, a soma das distâncias aos dois focos é igual ao eixo maior:</p>' +
     M.bloco(M.ind(M.v('d'), M.n(1)) + M.o('+') + M.ind(M.v('d'), M.n(2)) + M.o('=') + M.n(2) + M.v('a')) +
     `<p>A excentricidade ${M.linha(M.v('e'))} mede o achatamento (0 é um círculo). Marte tem e ≈ 0,09; Mercúrio, e ≈ 0,21. As distâncias mínima e máxima ao Sol são:</p>` +
@@ -84,7 +84,7 @@ export const lei2: CardDef = {
     '<p>Repare em Mercúrio: quando passa perto do Sol, ele acelera; quando se afasta, fica mais lento.</p>' +
     '<p>Kepler descobriu a regra exata: a linha que liga o planeta ao Sol <b>varre áreas iguais em tempos iguais</b>. Agora as fatias coloridas na órbita de Mercúrio mostram isso: cada uma é percorrida no mesmo tempo e todas têm a mesma área.</p>' +
     '<p>Fatias curtinhas e largas perto do Sol, compridas e finas longe dele.</p>',
-  ef2:
+  avancado:
     '<p>A velocidade orbital muda ao longo da elipse, segundo a equação vis-viva:</p>' +
     M.bloco(
       M.v('v') +
@@ -118,7 +118,7 @@ export function lei3(planetas: { n: string; a: number; T: number }[]): CardDef {
       '<p>Júpiter leva quase 12 anos para dar uma volta no Sol. A Terra leva 1 ano, e Mercúrio, só 88 dias.</p>' +
       '<p>Kepler encontrou uma conta que liga a distância ao tempo de uma volta: <b>o cubo da distância é igual ao quadrado do período</b>, usando anos e a distância Terra–Sol como unidades.</p>' +
       `<div class="tabela"><table><thead><tr><th>Planeta</th><th>a (UA)</th><th>T (anos)</th><th>a³</th><th>T²</th></tr></thead><tbody>${linhas}</tbody></table></div>`,
-    ef2:
+    avancado:
       M.bloco(M.pot(M.v('T'), M.n(2)) + M.o('=') + M.pot(M.v('a'), M.n(3))) +
       '<p>Vale para todos os planetas em torno do Sol, com T em anos e a em UA. Newton depois mostrou a forma geral:</p>' +
       M.bloco(

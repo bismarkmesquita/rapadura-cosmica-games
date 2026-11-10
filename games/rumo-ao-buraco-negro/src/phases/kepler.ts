@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { LUZ } from '../core/engine';
 import { fmt, TAU } from '@shared/math/format';
 import { anomaliaExcentrica, periodoEmAnos, visVivaSolar } from '@shared/physics/kepler';
+import { fimDeFase } from '@shared/ui/fimDeFase';
 import { linhaHud, tituloHud } from '@shared/ui/hud';
 import { COR } from '@shared/draw/helpers';
 import type { Fase } from '../types';
@@ -9,7 +10,7 @@ import { scene } from '../core/engine';
 import { estado, nave, posicionaNave } from '../core/estado';
 import { iniciaCamera, rig } from '../core/camera';
 import { controlaNave, registraTrilha } from '../core/ship';
-import { cards, info, missoes, painel, teclasDaFase, toast } from '../core/ui';
+import { acao, cards, info, missoes, painel, teclasDaFase, toast } from '../core/ui';
 import { desenhaAlvo, rotulo3D } from '../core/overlay';
 import { fluxo } from '../core/flow';
 import { brilho } from '../scene/sprites';
@@ -274,7 +275,7 @@ export class FaseKepler implements Fase {
     else if (m.id === 'jupiter' && n === 'Júpiter' && missoes.conclui('jupiter'))
       cards.enfileira({ ...T.lei3(this.planetas), aoFechar: () => (this.mostraPeriodos = true) });
     else if (m.id === 'terra' && n === 'Terra' && missoes.conclui('terra'))
-      cards.enfileira({ ...T.porque, aoFechar: () => fluxo.iniciaFase(2) });
+      fimDeFase(acao, cards, { ...T.porque, aoFechar: () => fluxo.iniciaFase(2) });
   }
 
   sync(dt: number): void {
