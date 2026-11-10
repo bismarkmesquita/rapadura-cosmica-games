@@ -1,0 +1,20 @@
+{
+  "slug": "observatorio",
+  "titulo": "Observatório",
+  "resumo": "Monte um telescópio na oficina e use no observatório: aumento, luz, detalhes e o tremor da atmosfera.",
+  "aula": "Telescópios",
+  "temas": [
+    "Arranjos ópticos",
+    "Montagens",
+    "Aumento e razão focal",
+    "Magnitude limite",
+    "Resolução",
+    "Seeing"
+  ],
+  "fases": 7,
+  "duracaoMinutos": 60,
+  "tecnologias": ["three"],
+  "status": "rascunho",
+  "versao": "0.1.0",
+  "atualizadoEm": "2026-11-03"
+}

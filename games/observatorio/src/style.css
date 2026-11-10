@@ -1,0 +1,364 @@
+/* Layout deste jogo: a cena 2D em tela cheia, HUD nos cantos e controles da fase embaixo, no centro. */
+html,
+body {
+  overflow: hidden;
+}
+/* Sem zoom nem rolagem da página ao arrastar na cena; só camadas, slides e painéis rolam na vertical. */
+body,
+#c {
+  touch-action: none;
+}
+#c {
+  user-select: none;
+}
+.camada,
+.card--slide .texto,
+.hud .box {
+  touch-action: pan-y;
+}
+#c,
+#c3d {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* O WebGL fica atrás; o canvas 2D, transparente por cima, recebe os toques e desenha os rótulos. */
+#c3d {
+  touch-action: none;
+}
+.vazio {
+  display: none !important;
+}
+.invisivel {
+  visibility: hidden;
+}
+
+#missoes {
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  left: max(14px, env(safe-area-inset-left, 0px));
+  max-width: min(340px, calc(100vw - 28px));
+}
+.progresso {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+}
+.progresso i {
+  width: 22px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.progresso i.acesa {
+  background: var(--sol);
+}
+#topoBtns {
+  position: fixed;
+  z-index: 6;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  right: max(14px, env(safe-area-inset-right, 0px));
+  display: flex;
+  gap: 8px;
+}
+#painel {
+  top: calc(64px + env(safe-area-inset-top, 0px));
+  right: max(14px, env(safe-area-inset-right, 0px));
+  min-width: 240px;
+}
+#controles {
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, calc(100vw - 340px));
+  user-select: none;
+}
+/* Uma linha só (barra e botões lado a lado), para a caixa tomar pouca altura da cena. */
+#controles .box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+#controles .faixa {
+  flex: 1 1 260px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+/* A barra fica com o espaço que sobra ao lado do rótulo e do valor (width: 100% empurraria o valor para fora). */
+#controles input[type='range'] {
+  flex: 1 1 60px;
+  width: auto;
+  min-width: 60px;
+  accent-color: var(--sol);
+}
+/* Fase com muitos botões (missão final): a caixa usa a largura da tela, para caber em menos linhas. */
+#controles:has(.largo) {
+  width: min(860px, calc(100vw - 28px));
+}
+#controles .nota {
+  flex: 1 1 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+#controles .pergunta {
+  flex: 1 1 100%;
+  margin: 0;
+}
+#controles .res {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 14px;
+  color: var(--alerta);
+}
+#controles .res:empty {
+  display: none;
+}
+#controles output {
+  min-width: 5.5em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+#controles .curto {
+  display: none;
+  color: var(--ink);
+  font-weight: 700;
+}
+#controles .opcoes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#controles .btn.sel {
+  border-color: var(--sol);
+  background: rgba(255, 181, 71, 0.12);
+}
+/* No topo, junto dos botões: o canto de baixo fica livre para as cenas (réguas, eixos). */
+#seloJogo {
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+  opacity: 0.85;
+}
+
+.btn-avancado::before {
+  content: '';
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
+  vertical-align: 1px;
+}
+.btn-avancado.ligado {
+  border-color: var(--orbita);
+  color: var(--orbita);
+}
+.btn-avancado.ligado::before {
+  background: var(--orbita);
+  border-color: var(--orbita);
+}
+
+/* Menu inicial */
+#menu .card {
+  width: min(900px, 100%);
+}
+#menu .topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#menu h1 {
+  font-family: var(--f-marca);
+  font-weight: 400;
+  font-size: clamp(38px, 7vw, 72px);
+  line-height: 0.95;
+  margin: 10px 0 12px;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+#menu h1 em {
+  font-style: normal;
+  color: var(--sol);
+}
+.fases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+.fase {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+}
+.fase b {
+  font-family: var(--f-display);
+  font-size: 17px;
+}
+.fase small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.fase.sel {
+  border-color: var(--sol);
+  background: rgba(255, 181, 71, 0.08);
+}
+.fase.feita .eyebrow::after {
+  content: ' ✓';
+  color: var(--ok);
+}
+.fase:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.menu-avancado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 15px;
+}
+/*
+ * Slides mais altos que a tela (com o Avançado aberto): centralizado, o começo do card sumia acima do topo sem
+ * dar para rolar até lá. Com margem automática, o card fica no meio quando cabe e começa no topo quando não cabe.
+ */
+.camada {
+  place-items: start center;
+}
+.camada > .card {
+  margin-block: auto;
+}
+
+.acoes--inicio {
+  justify-content: flex-start !important;
+}
+.pausa-canal {
+  margin-top: 22px;
+  color: var(--muted);
+}
+
+/* Aviso "Gire o celular" */
+#gire {
+  display: none;
+  z-index: 30;
+  text-align: center;
+  background: var(--void);
+}
+#gire .acoes {
+  justify-content: center;
+}
+@media (orientation: portrait) {
+  .toque #gire {
+    display: grid;
+  }
+}
+
+@media (max-width: 900px) {
+  #controles {
+    width: min(460px, calc(100vw - 28px));
+  }
+  #seloJogo {
+    display: none;
+  }
+}
+
+/* Telas baixas: celular deitado */
+@media (max-height: 500px) {
+  .hud {
+    font-size: 13px;
+  }
+  .hud .box {
+    padding: 8px 10px;
+  }
+  #missoes {
+    max-width: min(280px, 32vw);
+  }
+  /* Na tela pequena, as missões viram um objetivo: só a atual aparece. */
+  #missoes li:not(.atual) {
+    display: none;
+  }
+  #topoBtns .btn {
+    padding: 6px 9px;
+    font-size: 13px;
+  }
+  #painel {
+    top: calc(52px + env(safe-area-inset-top, 0px));
+    min-width: 0;
+    max-width: min(260px, 32vw);
+  }
+  #controles {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    width: min(480px, 58vw);
+  }
+  #controles .box {
+    gap: 6px 10px;
+  }
+  /* Rótulo curto (ou nenhum) no lugar do longo, para barras e botões caberem numa linha; a barra tem aria-label. */
+  #controles .longo {
+    display: none;
+  }
+  #controles .curto {
+    display: inline;
+  }
+  #controles output {
+    min-width: 0;
+  }
+  #controles .faixa {
+    flex-basis: 160px;
+  }
+  #controles .btn {
+    padding: 5px 9px;
+    font-size: 13px;
+  }
+  .painel-acao {
+    top: calc(52px + env(safe-area-inset-top, 0px));
+    bottom: auto;
+  }
+  .painel-acao .box {
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
+  }
+  .painel-acao.painel-acao--curto {
+    top: auto;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  #menu h1 {
+    font-size: 34px;
+    margin: 4px 0 6px;
+  }
+  .fases {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    margin: 10px 0;
+  }
+  .fase {
+    padding: 8px;
+  }
+  .fase b {
+    font-size: 14px;
+  }
+  .fase small {
+    display: none;
+  }
+}
+@media (max-height: 420px) {
+  #menu .card > p,
+  .menu-avancado span {
+    display: none;
+  }
+}

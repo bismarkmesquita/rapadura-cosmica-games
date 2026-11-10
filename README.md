@@ -8,6 +8,7 @@ Jogos de astronomia para o navegador, feitos para as aulas do canal
 | --------------------------------------------------- | ------------------------------ |
 | [Rumo ao Buraco Negro](games/rumo-ao-buraco-negro/) | Buracos negros                 |
 | [Réguas do Universo](games/reguas-do-universo/)     | Fluxo, magnitudes e distâncias |
+| [Observatório](games/observatorio/)                 | Telescópios                    |
 
 ## Rodar no computador
 

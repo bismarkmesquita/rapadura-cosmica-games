@@ -117,6 +117,8 @@ Jogos sem 3D (como o `reguas-do-universo`) não usam Three.js: cada fase desenha
 (`desenha(c, w, h)`) e recebe cliques e toques por `aperta`, `arrasta` e `solta`, com o contrato no `types.ts` do
 jogo. A cena fica entre as caixas do topo e a caixa de controles da fase (`topoLivre` e `alturaLivre`, em
 `core/palco.ts`), para nada ficar embaixo dos painéis; perguntas de múltipla escolha vão na caixa de controles.
+O `observatorio` usa o mesmo núcleo 2D e acrescenta uma camada Three.js atrás do canvas (`core/tres.ts`), só nas
+fases que precisam de 3D: a fase devolve a cena em `cena3d()` e libera tudo em `sai()`.
 
 ### Conteúdo separado do código
 
